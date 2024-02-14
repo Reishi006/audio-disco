@@ -8,18 +8,20 @@ function App() {
   const upAnim = useRef(null);
 
   const handleUp = () => {
+    let time = 300;
+    
     const el = upAnim.current;
 
     el.style.display = `flex`;
     el.style.animation = 'none';
     void el.offsetWidth;
-    el.style.animation = '.5s fading 1 forwards';
+    el.style.animation = `.${time/100}s fading 1 backwards`;
 
     setTimeout(() => {
       upAnim.current.style.display = `none`;
       console.log(`display`);
       setIsAnimating(false);
-    },  500);
+    },  time);
     console.log('Up');
   }
 
