@@ -8,6 +8,13 @@ function App() {
   const midAnim = useRef(null);
   const downAnim = useRef(null);
 
+  const colorsRef = useRef({
+    red: 50,
+    green: 192,
+    blue: 192,
+  });
+  const col = colorsRef.current;
+
   const animKey = (e) => {
     if (e.key === 'a' || e.key === 'z') {
       handleUp();
@@ -18,6 +25,31 @@ function App() {
     if (e.key === 'd' || e.key === 'c') {
       handleDown();
     }
+  }
+
+
+  /* useEffect(() => {
+
+    const interval = setInterval (() => {
+      col.red += 1;
+      col.green += 1;
+      col.blue += 1;
+      console.log(`interval: ${col.red}`);
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, []); */
+
+  const styles = {
+    upAnim: {
+      background: `linear-gradient(0deg, rgba(0, 0, 0, 0.0), rgb(${col.red}, ${col.green}, ${col.blue}))`,
+    },
+    midAnim: {
+      background: `linear-gradient(0deg, rgba(0, 0, 0, 0.0) 0%, rgb(${col.red}, ${col.green}, ${col.blue}) 50%, rgba(0, 0, 0, 0.0) 100%)`,
+    },
+    downAnim: {
+      background: `linear-gradient(180deg, rgba(0, 0, 0, 0.0), rgb(${col.red}, ${col.green}, ${col.blue}))`,
+    },
   }
 
   useEffect(() => {
@@ -94,7 +126,8 @@ function App() {
         <div className='horizontal-anim'>
           <div
             ref={upAnim} 
-            className={`up-anim`}
+            className='up-anim'
+            style={styles.upAnim}
           >Up</div>
         </div>
 
@@ -102,6 +135,7 @@ function App() {
           <div 
             ref={midAnim}
             className='mid-anim'
+            style={styles.midAnim}
           >Mid</div>
         </div>
 
@@ -109,6 +143,7 @@ function App() {
           <div
           ref={downAnim}
           className='down-anim'
+          style={styles.downAnim}
           >Down</div>
         </div>
       </div>
