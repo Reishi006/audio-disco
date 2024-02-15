@@ -8,12 +8,12 @@ function App() {
   const midAnim = useRef(null);
   const downAnim = useRef(null);
 
-  const colorsRef = useRef({
+  const [colorsRef, setColorsRef] = useState({
     red: 50,
     green: 192,
     blue: 192,
   });
-  const col = colorsRef.current;
+  //const col = colorsRef.current;
 
   const animKey = (e) => {
     if (e.key === 'a' || e.key === 'z') {
@@ -28,27 +28,45 @@ function App() {
   }
 
 
-  /* useEffect(() => {
-
+  useEffect(() => {
+    let inc = 10
     const interval = setInterval (() => {
-      col.red += 1;
-      col.green += 1;
-      col.blue += 1;
-      console.log(`interval: ${col.red}`);
-    }, 500);
+      setColorsRef((prevColors) => ({
+        red: (prevColors.red + inc) %  256,
+        green: (prevColors.green + inc) %  256,
+        blue: (prevColors.blue +  inc) %  256,
+      }));
 
+      
+    }, 500);
+    console.log(`interval: ${colorsRef.red}`);
     return () => clearInterval(interval);
-  }, []); */
+  }, []);
+
+  const getGradientStyle = (anim) => {
+    if (anim === 'up') {
+      let up = `linear-gradient(0deg, rgba(0, 0, 0, 0.0), rgb(${colorsRef.red}, ${colorsRef.green}, ${colorsRef.blue}))`;
+      return up;
+    }
+    if (anim === 'mid') {
+      let mid = `linear-gradient(0deg, rgba(0, 0, 0, 0.0) 0%, rgb(${colorsRef.red}, ${colorsRef.green}, ${colorsRef.blue}) 50%, rgba(0, 0, 0, 0.0) 100%)`
+      return mid;
+    }
+    if (anim === 'down') {
+      let down = `linear-gradient(180deg, rgba(0, 0, 0, 0.0), rgb(${colorsRef.red}, ${colorsRef.green}, ${colorsRef.blue}))`;
+      return down;
+    }
+  }
 
   const styles = {
     upAnim: {
-      background: `linear-gradient(0deg, rgba(0, 0, 0, 0.0), rgb(${col.red}, ${col.green}, ${col.blue}))`,
+      background: getGradientStyle('up'),
     },
     midAnim: {
-      background: `linear-gradient(0deg, rgba(0, 0, 0, 0.0) 0%, rgb(${col.red}, ${col.green}, ${col.blue}) 50%, rgba(0, 0, 0, 0.0) 100%)`,
+      background: getGradientStyle('mid'),
     },
     downAnim: {
-      background: `linear-gradient(180deg, rgba(0, 0, 0, 0.0), rgb(${col.red}, ${col.green}, ${col.blue}))`,
+      background: getGradientStyle('down'),
     },
   }
 
