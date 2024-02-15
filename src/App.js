@@ -8,12 +8,12 @@ function App() {
   const midAnim = useRef(null);
   const downAnim = useRef(null);
 
-  const [colorsRef, setColorsRef] = useState({
+  const [colorsState, setcolorsState] = useState({
     red: 50,
     green: 192,
     blue: 192,
+    hueRotate: 0,
   });
-  //const col = colorsRef.current;
 
   const animKey = (e) => {
     if (e.key === 'a' || e.key === 'z') {
@@ -31,29 +31,30 @@ function App() {
   useEffect(() => {
     let inc = 10
     const interval = setInterval (() => {
-      setColorsRef((prevColors) => ({
-        red: (prevColors.red + inc) %  256,
+      setcolorsState((prevColors) => ({
+        /* red: (prevColors.red + inc) %  256,
         green: (prevColors.green + inc) %  256,
-        blue: (prevColors.blue +  inc) %  256,
+        blue: (prevColors.blue +  inc) %  256, */
+        hueRotate: (prevColors.hueRotate + inc) % 360,
       }));
 
       
     }, 500);
-    console.log(`interval: ${colorsRef.red}`);
+    console.log(`interval: ${colorsState.red}`);
     return () => clearInterval(interval);
   }, []);
 
   const getGradientStyle = (anim) => {
     if (anim === 'up') {
-      let up = `linear-gradient(0deg, rgba(0, 0, 0, 0.0), rgb(${colorsRef.red}, ${colorsRef.green}, ${colorsRef.blue}))`;
+      let up = `linear-gradient(0deg, rgba(0, 0, 0, 0.0), rgb(${colorsState.red}, ${colorsState.green}, ${colorsState.blue}))`;
       return up;
     }
     if (anim === 'mid') {
-      let mid = `linear-gradient(0deg, rgba(0, 0, 0, 0.0) 0%, rgb(${colorsRef.red}, ${colorsRef.green}, ${colorsRef.blue}) 50%, rgba(0, 0, 0, 0.0) 100%)`
+      let mid = `linear-gradient(0deg, rgba(0, 0, 0, 0.0) 0%, rgb(${colorsState.red}, ${colorsState.green}, ${colorsState.blue}) 50%, rgba(0, 0, 0, 0.0) 100%)`
       return mid;
     }
     if (anim === 'down') {
-      let down = `linear-gradient(180deg, rgba(0, 0, 0, 0.0), rgb(${colorsRef.red}, ${colorsRef.green}, ${colorsRef.blue}))`;
+      let down = `linear-gradient(180deg, rgba(0, 0, 0, 0.0), rgb(${colorsState.red}, ${colorsState.green}, ${colorsState.blue}))`;
       return down;
     }
   }
@@ -61,12 +62,15 @@ function App() {
   const styles = {
     upAnim: {
       background: getGradientStyle('up'),
+      filter: `hue-rotate(${colorsState.hueRotate}deg)`,
     },
     midAnim: {
       background: getGradientStyle('mid'),
+      filter: `hue-rotate(${colorsState.hueRotate}deg)`,
     },
     downAnim: {
       background: getGradientStyle('down'),
+      filter: `hue-rotate(${colorsState.hueRotate}deg)`,
     },
   }
 
