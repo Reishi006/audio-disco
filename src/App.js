@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import './App.scss';
 
 function App() {
+  const bgAnim = useRef(null);
   const upAnim = useRef(null);
   const midAnim = useRef(null);
   const downAnim = useRef(null);
@@ -19,6 +20,21 @@ function App() {
     mid: false,
     down: false,
   });
+
+  const animBg = () => {
+    let time = 300;
+
+    let el = bgAnim.current;
+    el.style.display = 'flex';
+    el.style.animation = 'none';
+    void el.offsetWidth;
+    el.style.animation = `.${time/100}s fading 1 backwards`;
+
+    setTimeout(() => {
+      el.style.display = `none`;
+    },  time);
+
+  }
 
   const animKey = (e) => {
     if (e.key === 'a' || e.key === 'z') {
@@ -65,6 +81,9 @@ function App() {
   }
 
   const styles = {
+    bgAnim: {
+      background: `radial-gradient(circle, #36383f00 0%, #777c8c 100%)`,
+    },
     notActiveButton: {
       boxShadow: `0px 0px 10px rgb(0, 0, 0)`,
       backgroundColor: `rgb(29, 31, 39)`,
@@ -120,6 +139,8 @@ function App() {
     setTimeout(() => {
       el.style.display = `none`;
     },  time);
+
+    animBg();
     console.log('Up');
   }
 
@@ -146,6 +167,8 @@ function App() {
     setTimeout(() => {
       el.style.display = `none`;
     },  time);
+
+    animBg();
     console.log('Mid');
   }
 
@@ -172,11 +195,14 @@ function App() {
     setTimeout(() => {
       el.style.display = `none`;
     },  time);
+
+    animBg();
     console.log('Down');
   }
 
   return (
     <>
+      
       <div className='app'>
         <div className='controls-container'>
             <div 
@@ -199,6 +225,8 @@ function App() {
             >Down</div>
         </div>
       </div>
+
+      
 
       <div className='anim-container'>
         <div className='horizontal-anim'>
@@ -224,6 +252,10 @@ function App() {
           style={styles.downAnim}
           >Down</div>
         </div>
+
+        <div className='bg-anim' ref={bgAnim} style={styles.bgAnim}>
+        Something
+      </div>
       </div>
     </>
   );
