@@ -128,10 +128,20 @@ function App() {
     
     const el = midAnim.current;
 
+    setButtonClick({...buttonClick,
+      mid: true,
+    });
+
     el.style.display = `flex`;
     el.style.animation = 'none';
     void el.offsetWidth;
     el.style.animation = `.${time/100}s fading 1 backwards`;
+
+    setTimeout(() => {
+      setButtonClick({...buttonClick,
+        mid: false,
+      });
+    }, time/3);
 
     setTimeout(() => {
       el.style.display = `none`;
@@ -144,10 +154,20 @@ function App() {
     
     const el = downAnim.current;
 
+    setButtonClick({...buttonClick,
+      down: true,
+    });
+
     el.style.display = `flex`;
     el.style.animation = 'none';
     void el.offsetWidth;
     el.style.animation = `.${time/100}s fading 1 backwards`;
+
+    setTimeout(() => {
+      setButtonClick({...buttonClick,
+        down: false,
+      });
+    }, time/3);
 
     setTimeout(() => {
       el.style.display = `none`;
@@ -169,11 +189,13 @@ function App() {
               className='control' 
               onKeyDown={animKey} 
               onClick={handleMiddle}
+              style={buttonClick.mid ? styles.activeButton : styles.notActiveButton}
             >Mid</div>
             <div 
               className='control' 
               onKeyDown={animKey} 
               onClick={handleDown}
+              style={buttonClick.down ? styles.activeButton : styles.notActiveButton}
             >Down</div>
         </div>
       </div>
