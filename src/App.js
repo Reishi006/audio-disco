@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from 'react';
 import './App.scss';
 
 function App() {
-
   const upAnim = useRef(null);
   const midAnim = useRef(null);
   const downAnim = useRef(null);
@@ -13,6 +12,12 @@ function App() {
     green: 192,
     blue: 192,
     hueRotate: 0,
+  });
+
+  const [buttonClick, setButtonClick] = useState({
+    up: false,
+    mid: false,
+    down: false,
   });
 
   const animKey = (e) => {
@@ -60,6 +65,16 @@ function App() {
   }
 
   const styles = {
+    notActiveButton: {
+      boxShadow: `0px 0px 10px rgb(0, 0, 0)`,
+      backgroundColor: `rgb(29, 31, 39)`,
+      color: `rgb(200, 200, 200)`,
+    },
+    activeButton: {
+      boxShadow: `0px 0px 10px rgb(35, 37, 46)`,
+      backgroundColor: `rgb(35, 37, 46)`,
+      color: `rgb(240, 240, 240)`,
+    },
     upAnim: {
       background: getGradientStyle('up'),
       filter: `hue-rotate(${colorsState.hueRotate}deg)`,
@@ -76,12 +91,8 @@ function App() {
 
   useEffect(() => {
     document.addEventListener('keydown', animKey);
-    document.addEventListener('keydown', animKey);
-    document.addEventListener('keydown', animKey);
 
     return () => {
-      document.removeEventListener('keydown', animKey);
-      document.removeEventListener('keydown', animKey);
       document.removeEventListener('keydown', animKey);
     };
   }, []);
@@ -91,10 +102,20 @@ function App() {
     
     const el = upAnim.current;
 
+    setButtonClick({...buttonClick,
+      up: true,
+    });
+
     el.style.display = `flex`;
     el.style.animation = 'none';
     void el.offsetWidth;
     el.style.animation = `.${time/100}s fading 1 backwards`;
+
+    setTimeout(() => {
+      setButtonClick({...buttonClick,
+        up: false,
+      });
+    }, time/3);
 
     setTimeout(() => {
       el.style.display = `none`;
@@ -138,9 +159,22 @@ function App() {
     <>
       <div className='app'>
         <div className='controls-container'>
-            <div className='control' onKeyDown={animKey} onClick={handleUp}>Up</div>
-            <div className='control' onKeyDown={animKey} onClick={handleMiddle}>Mid</div>
-            <div className='control' onKeyDown={animKey} onClick={handleDown}>Down</div>
+            <div 
+              className='control'
+              onKeyDown={animKey} 
+              onClick={handleUp}
+              style={buttonClick.up ? styles.activeButton : styles.notActiveButton}
+            >Up</div>
+            <div 
+              className='control' 
+              onKeyDown={animKey} 
+              onClick={handleMiddle}
+            >Mid</div>
+            <div 
+              className='control' 
+              onKeyDown={animKey} 
+              onClick={handleDown}
+            >Down</div>
         </div>
       </div>
 
