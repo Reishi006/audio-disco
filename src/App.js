@@ -7,6 +7,11 @@ function App() {
   const upAnim = useRef(null);
   const midAnim = useRef(null);
   const downAnim = useRef(null);
+  const bubbleAnim = useRef(null);
+
+  const bubbles = useRef([]);
+  
+
 
   const [colorsState, setcolorsState] = useState({
     red: 50,
@@ -19,7 +24,10 @@ function App() {
     up: false,
     mid: false,
     down: false,
+    bubble: false,
   });
+
+  const [reposition, setReposition] = useState(false);
 
   const animBg = () => {
     let time = 300;
@@ -45,6 +53,9 @@ function App() {
     }
     if (e.key === 'd' || e.key === 'c') {
       handleDown();
+    }
+    if (e.key === 'b') {
+      handleBubbles();
     }
   }
 
@@ -203,6 +214,56 @@ function App() {
     console.log('Down');
   }
 
+  const elements = [1, 2, 3, 4, 5, 6];
+
+  useEffect(() => {
+    const getBubblesPosition = () => {
+      const x = Math.floor(Math.random() * window.innerWidth);
+      const y = Math.floor(Math.random() * window.innerHeight);
+
+      console.log(window.innerWidth);
+      return { x, y };
+    }
+
+    bubbles.current.forEach((ref) => {
+      const { x, y } = getBubblesPosition();
+      ref.style.position = 'absolute';
+      ref.style.left = `${x}px`;
+      ref.style.top = `${y}px`;
+      ref.style.transform = `translate(-100%, -100%)`;
+    });
+  }, [reposition]);
+
+  const handleBubbles = () => {
+    let time = 500;
+
+    setReposition(!reposition);
+
+    const el = bubbleAnim.current;
+
+    setButtonClick({...buttonClick, 
+      bubble: true,
+    });
+
+    el.style.display = `flex`;
+    el.style.animation = 'none';
+    void el.offsetWidth;
+    el.style.animation = `.${time/100}s fading 1 backwards`;
+
+    setTimeout(() => {
+      setButtonClick({...buttonClick,
+        bubble: false,
+      });
+    }, time/3);
+
+    setTimeout(() => {
+      el.style.display = `none`;
+    },  time);
+
+    animBg();
+    console.log('Bubbles');
+  }
+
   return (
     <>
       
@@ -226,6 +287,12 @@ function App() {
               onClick={handleDown}
               style={buttonClick.down ? styles.activeButton : styles.notActiveButton}
             >Down</div>
+            <div 
+              className='control' 
+              onKeyDown={animKey} 
+              onClick={handleBubbles}
+              style={buttonClick.down ? styles.activeButton : styles.notActiveButton}
+            >B</div>
         </div>
       </div>
 
@@ -257,8 +324,21 @@ function App() {
         </div>
 
         <div className='bg-anim' ref={bgAnim} style={styles.bgAnim}>
-        Something
-      </div>
+          Something
+        </div>
+
+        <div className='bubble-anim' ref={bubbleAnim}>
+          {elements.map((element, index) => (
+            <div
+              key={index}
+              ref={(el) => {
+                bubbles.current[index] = el;
+              }}
+            >
+              {element}
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );
