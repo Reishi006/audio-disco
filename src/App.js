@@ -84,6 +84,9 @@ function App() {
     bgAnim: {
       background: `radial-gradient(circle, #36383f00 0%, #777c8c 100%)`,
     },
+    controlContainer: {
+      filter: `hue-rotate(${colorsState.hueRotate}deg)`,
+    },
     notActiveButton: {
       boxShadow: `0px 0px 10px rgb(0, 0, 0)`,
       backgroundColor: `rgb(29, 31, 39)`,
@@ -204,7 +207,7 @@ function App() {
     <>
       
       <div className='app'>
-        <div className='controls-container'>
+        <div className='controls-container' style={styles.controlContainer}>
             <div 
               className='control'
               onKeyDown={animKey} 
