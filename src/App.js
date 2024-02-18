@@ -236,7 +236,6 @@ function App() {
       let g = colorsState.green + (Math.random() * 50);
       let b = colorsState.blue + (Math.random() * 50);
       ref.style.background = `radial-gradient(circle, rgb(${r}, ${g}, ${b}) 0%, #00000000 50%)`;
-      ref.style.filter = `hue-rotate(${colorsState.hueRotate}deg)`;
     });
   }
   const handleBubbles = () => {
