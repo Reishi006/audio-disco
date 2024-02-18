@@ -10,8 +10,14 @@ function App() {
   const bubbleAnim = useRef(null);
 
   const bubbles = useRef([]);
-  
 
+  const timeouts = useRef({
+    upTimeout: 0,
+    midTimeout: 0,
+    downTimeout: 0,
+    bgTimeout: 0,
+    bubbleTimeout: 0,
+  });
 
   const [colorsState, setcolorsState] = useState({
     red: 50,
@@ -26,14 +32,6 @@ function App() {
     down: false,
     bubble: false,
   });
-
-  const timeouts = {
-    upTimeout: 0,
-    midTimeout: 0,
-    downTimeout: 0,
-    bgTimeout: 0,
-    bubbleTimeout: 0,
-  }
 
 
   const animBg = () => {
@@ -62,13 +60,13 @@ function App() {
       handleDown();
     }
     if (e.key === 'b') {
-      handleBubbles();
+      animationHandler();
     }
   }
 
 
   useEffect(() => {
-    let inc = 10
+    let inc = 5;
     const interval = setInterval (() => {
       setcolorsState((prevColors) => ({
         /* red: (prevColors.red + inc) %  256,
@@ -76,12 +74,15 @@ function App() {
         blue: (prevColors.blue +  inc) %  256, */
         hueRotate: (prevColors.hueRotate + inc) % 360,
       }));
-
       
-    }, 500);
+    }, 250);
     console.log(`interval: ${colorsState.red}`);
     return () => clearInterval(interval);
   }, []);
+
+  /* useEffect(() => {
+    console.log(colorsState.hueRotate);
+  }, [colorsState.hueRotate]); */
 
   const getGradientStyle = (anim) => {
     if (anim === 'up') {
@@ -97,6 +98,7 @@ function App() {
       return down;
     }
   }
+
 
   const styles = {
     bgAnim: {
@@ -128,7 +130,7 @@ function App() {
       filter: `hue-rotate(${colorsState.hueRotate}deg)`,
     },
     bubbleAnim: {
-      filter: `hue-rotate(${colorsState.hueRotate}deg)`,
+      filter: `hue-rotate(${colorsState.hueRotate + 20}deg)`,
     }
   }
 
@@ -250,7 +252,6 @@ function App() {
     });
   }
 
-
   const handleBubbles = () => {
     let time = 500;
 
@@ -286,6 +287,64 @@ function App() {
     console.log('Bubbles');
   }
 
+
+  /* parameters to the universal function:
+
+  time,
+  timeouts object,
+  xAnim.current,
+  buttonClick.x,
+
+  */
+
+  /* useEffect(() => {
+    console.log(timeouts.bubbleTimeout);
+  }, [timeouts.bubbleTimeout, buttonClick.bubble]); */
+
+  const handleAnimation = (t, tout, elm, btnclick, bubble) => {
+
+    console.log(`timer: ${timeouts[tout]}`);
+    if (timeouts.current[tout]) {
+      clearTimeout(timeouts.current[tout]);
+      console.log(`timer cleared`);
+    }
+
+    bubble && bubbleReposition();
+
+    setButtonClick({...buttonClick, 
+      [btnclick]: true,
+    });
+
+    elm.style.animation = 'none';
+    void elm.offsetWidth;
+
+    elm.style.display = `flex`;
+    elm.style.animation = `.${t/100}s fading 1 backwards`;
+
+    setTimeout(() => {
+      setButtonClick({...buttonClick,
+        [btnclick]: false,
+      });
+    }, t/3);
+
+    timeouts.current[tout] = setTimeout(() => {
+      elm.style.display = `none`;
+    },  t-10);
+
+    animBg();
+    console.log('handleAnimation');
+  }
+  
+  const animationHandler = () => {
+    handleAnimation(
+      500, 
+      'bubbleTimeout', 
+      bubbleAnim.current, 
+      'bubble', 
+      true
+      )
+  }
+
   return (
     <>
       
@@ -312,7 +371,7 @@ function App() {
             <div 
               className='control' 
               onKeyDown={animKey} 
-              onClick={handleBubbles}
+              onClick={animationHandler}
               style={buttonClick.bubble ? styles.activeButton : styles.notActiveButton}
             >B</div>
         </div>
