@@ -27,7 +27,6 @@ function App() {
     bubble: false,
   });
 
-  const [reposition, setReposition] = useState(false);
 
   const animBg = () => {
     let time = 300;
@@ -120,6 +119,9 @@ function App() {
       background: getGradientStyle('down'),
       filter: `hue-rotate(${colorsState.hueRotate}deg)`,
     },
+    bubbleAnim: {
+      filter: `hue-rotate(${colorsState.hueRotate}deg)`,
+    }
   }
 
   useEffect(() => {
@@ -216,12 +218,11 @@ function App() {
 
   const elements = [1, 2, 3, 4, 5, 6];
 
-  useEffect(() => {
+  const bubbleReposition = () => {
     const getBubblesPosition = () => {
       const x = Math.floor(Math.random() * window.innerWidth);
       const y = Math.floor(Math.random() * window.innerHeight);
 
-      console.log(window.innerWidth);
       return { x, y };
     }
 
@@ -231,13 +232,17 @@ function App() {
       ref.style.left = `${x}px`;
       ref.style.top = `${y}px`;
       ref.style.transform = `translate(-100%, -100%)`;
+      let r = colorsState.red + (Math.random() * 10);
+      let g = colorsState.green + (Math.random() * 50);
+      let b = colorsState.blue + (Math.random() * 50);
+      ref.style.background = `radial-gradient(circle, rgb(${r}, ${g}, ${b}) 0%, #00000000 50%)`;
+      ref.style.filter = `hue-rotate(${colorsState.hueRotate}deg)`;
     });
-  }, [reposition]);
-
+  }
   const handleBubbles = () => {
     let time = 500;
 
-    setReposition(!reposition);
+    bubbleReposition();
 
     const el = bubbleAnim.current;
 
@@ -291,7 +296,7 @@ function App() {
               className='control' 
               onKeyDown={animKey} 
               onClick={handleBubbles}
-              style={buttonClick.down ? styles.activeButton : styles.notActiveButton}
+              style={buttonClick.bubble ? styles.activeButton : styles.notActiveButton}
             >B</div>
         </div>
       </div>
@@ -334,6 +339,7 @@ function App() {
               ref={(el) => {
                 bubbles.current[index] = el;
               }}
+              style={styles.bubbleAnim}
             >
               {element}
             </div>
