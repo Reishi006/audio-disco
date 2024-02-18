@@ -27,6 +27,14 @@ function App() {
     bubble: false,
   });
 
+  const timeouts = {
+    upTimeout: 0,
+    midTimeout: 0,
+    downTimeout: 0,
+    bgTimeout: 0,
+    bubbleTimeout: 0,
+  }
+
 
   const animBg = () => {
     let time = 300;
@@ -141,9 +149,10 @@ function App() {
       up: true,
     });
 
-    el.style.display = `flex`;
     el.style.animation = 'none';
     void el.offsetWidth;
+
+    el.style.display = `flex`;
     el.style.animation = `.${time/100}s fading 1 backwards`;
 
     setTimeout(() => {
@@ -169,9 +178,10 @@ function App() {
       mid: true,
     });
 
-    el.style.display = `flex`;
     el.style.animation = 'none';
     void el.offsetWidth;
+
+    el.style.display = `flex`;
     el.style.animation = `.${time/100}s fading 1 backwards`;
 
     setTimeout(() => {
@@ -197,9 +207,10 @@ function App() {
       down: true,
     });
 
-    el.style.display = `flex`;
     el.style.animation = 'none';
     void el.offsetWidth;
+
+    el.style.display = `flex`;
     el.style.animation = `.${time/100}s fading 1 backwards`;
 
     setTimeout(() => {
@@ -238,8 +249,14 @@ function App() {
       ref.style.background = `radial-gradient(circle, rgb(${r}, ${g}, ${b}) 0%, #00000000 50%)`;
     });
   }
+
+
   const handleBubbles = () => {
     let time = 500;
+
+    if (timeouts.bubbleTimeout) {
+      clearTimeout(timeouts.bubbleTimeout);
+    }
 
     bubbleReposition();
 
@@ -249,9 +266,10 @@ function App() {
       bubble: true,
     });
 
-    el.style.display = `flex`;
     el.style.animation = 'none';
     void el.offsetWidth;
+
+    el.style.display = `flex`;
     el.style.animation = `.${time/100}s fading 1 backwards`;
 
     setTimeout(() => {
@@ -260,7 +278,7 @@ function App() {
       });
     }, time/3);
 
-    setTimeout(() => {
+    timeouts.bubbleTimeout = setTimeout(() => {
       el.style.display = `none`;
     },  time);
 
