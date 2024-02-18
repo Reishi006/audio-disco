@@ -51,16 +51,16 @@ function App() {
 
   const animKey = (e) => {
     if (e.key === 'a' || e.key === 'z') {
-      handleUp();
+      upAnimation();
     }
     if (e.key === 's' || e.key === 'x') {
-      handleMiddle();
+      midAnimation();
     }
     if (e.key === 'd' || e.key === 'c') {
-      handleDown();
+      downAnimation();
     }
     if (e.key === 'b') {
-      animationHandler();
+      bubbleAnimation();
     }
   }
 
@@ -252,7 +252,7 @@ function App() {
     });
   }
 
-  const handleBubbles = () => {
+  /* const handleBubbles = () => {
     let time = 500;
 
     if (timeouts.bubbleTimeout) {
@@ -285,7 +285,7 @@ function App() {
 
     animBg();
     console.log('Bubbles');
-  }
+  } */
 
 
   /* parameters to the universal function:
@@ -335,14 +335,18 @@ function App() {
     console.log('handleAnimation');
   }
   
-  const animationHandler = () => {
-    handleAnimation(
-      500, 
-      'bubbleTimeout', 
-      bubbleAnim.current, 
-      'bubble', 
-      true
-      )
+
+  const upAnimation = () => {
+    handleAnimation(300, 'upTimeout', upAnim.current, 'up', false);
+  }
+  const midAnimation = () => {
+    handleAnimation(300, 'midTimeout', midAnim.current, 'mid', false);
+  }
+  const downAnimation = () => {
+    handleAnimation(300, 'downTimeout', downAnim.current, 'down', false);
+  }
+  const bubbleAnimation = () => {
+    handleAnimation(500, 'bubbleTimeout', bubbleAnim.current, 'bubble', true);
   }
 
   return (
@@ -353,25 +357,25 @@ function App() {
             <div 
               className='control'
               onKeyDown={animKey} 
-              onClick={handleUp}
+              onClick={upAnimation}
               style={buttonClick.up ? styles.activeButton : styles.notActiveButton}
             >Up</div>
             <div 
               className='control' 
               onKeyDown={animKey} 
-              onClick={handleMiddle}
+              onClick={midAnimation}
               style={buttonClick.mid ? styles.activeButton : styles.notActiveButton}
             >Mid</div>
             <div 
               className='control' 
               onKeyDown={animKey} 
-              onClick={handleDown}
+              onClick={downAnimation}
               style={buttonClick.down ? styles.activeButton : styles.notActiveButton}
             >Down</div>
             <div 
               className='control' 
               onKeyDown={animKey} 
-              onClick={animationHandler}
+              onClick={bubbleAnimation}
               style={buttonClick.bubble ? styles.activeButton : styles.notActiveButton}
             >B</div>
         </div>
