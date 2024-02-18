@@ -130,6 +130,7 @@ function App() {
       filter: `hue-rotate(${colorsState.hueRotate}deg)`,
     },
     bubbleAnim: {
+      background: `radial-gradient(circle, rgb(${colorsState.red}, ${colorsState.green}, ${colorsState.blue}) 0%, #00000000 50%)`,
       filter: `hue-rotate(${colorsState.hueRotate + 20}deg)`,
     }
   }
@@ -142,99 +143,15 @@ function App() {
     };
   }, []);
 
-  const handleUp = () => {
-    let time = 300;
-    
-    const el = upAnim.current;
-
-    setButtonClick({...buttonClick,
-      up: true,
-    });
-
-    el.style.animation = 'none';
-    void el.offsetWidth;
-
-    el.style.display = `flex`;
-    el.style.animation = `.${time/100}s fading 1 backwards`;
-
-    setTimeout(() => {
-      setButtonClick({...buttonClick,
-        up: false,
-      });
-    }, time/3);
-
-    setTimeout(() => {
-      el.style.display = `none`;
-    },  time);
-
-    animBg();
-    console.log('Up');
-  }
-
-  const handleMiddle = () => {
-    let time = 300;
-    
-    const el = midAnim.current;
-
-    setButtonClick({...buttonClick,
-      mid: true,
-    });
-
-    el.style.animation = 'none';
-    void el.offsetWidth;
-
-    el.style.display = `flex`;
-    el.style.animation = `.${time/100}s fading 1 backwards`;
-
-    setTimeout(() => {
-      setButtonClick({...buttonClick,
-        mid: false,
-      });
-    }, time/3);
-
-    setTimeout(() => {
-      el.style.display = `none`;
-    },  time);
-
-    animBg();
-    console.log('Mid');
-  }
-
-  const handleDown = () => {
-    let time = 300;
-    
-    const el = downAnim.current;
-
-    setButtonClick({...buttonClick,
-      down: true,
-    });
-
-    el.style.animation = 'none';
-    void el.offsetWidth;
-
-    el.style.display = `flex`;
-    el.style.animation = `.${time/100}s fading 1 backwards`;
-
-    setTimeout(() => {
-      setButtonClick({...buttonClick,
-        down: false,
-      });
-    }, time/3);
-
-    setTimeout(() => {
-      el.style.display = `none`;
-    },  time);
-
-    animBg();
-    console.log('Down');
-  }
-
   const elements = [1, 2, 3, 4, 5, 6];
 
   const bubbleReposition = () => {
     const getBubblesPosition = () => {
-      const x = Math.floor(Math.random() * window.innerWidth);
-      const y = Math.floor(Math.random() * window.innerHeight);
+      let xWin = window.innerWidth;
+      let yWin = window.innerHeight;
+
+      const x = Math.floor(Math.random() * xWin) /* + (xWin * 0.05) */;
+      const y = Math.floor(Math.random() * yWin) /* + (yWin * 0.05) */;
 
       return { x, y };
     }
@@ -244,58 +161,13 @@ function App() {
       ref.style.position = 'absolute';
       ref.style.left = `${x}px`;
       ref.style.top = `${y}px`;
-      ref.style.transform = `translate(-100%, -100%)`;
+      ref.style.transform = `translate(-50%, -50%)`;
       let r = colorsState.red + (Math.random() * 10);
       let g = colorsState.green + (Math.random() * 50);
       let b = colorsState.blue + (Math.random() * 50);
       ref.style.background = `radial-gradient(circle, rgb(${r}, ${g}, ${b}) 0%, #00000000 50%)`;
     });
   }
-
-  /* const handleBubbles = () => {
-    let time = 500;
-
-    if (timeouts.bubbleTimeout) {
-      clearTimeout(timeouts.bubbleTimeout);
-    }
-
-    bubbleReposition();
-
-    const el = bubbleAnim.current;
-
-    setButtonClick({...buttonClick, 
-      bubble: true,
-    });
-
-    el.style.animation = 'none';
-    void el.offsetWidth;
-
-    el.style.display = `flex`;
-    el.style.animation = `.${time/100}s fading 1 backwards`;
-
-    setTimeout(() => {
-      setButtonClick({...buttonClick,
-        bubble: false,
-      });
-    }, time/3);
-
-    timeouts.bubbleTimeout = setTimeout(() => {
-      el.style.display = `none`;
-    },  time);
-
-    animBg();
-    console.log('Bubbles');
-  } */
-
-
-  /* parameters to the universal function:
-
-  time,
-  timeouts object,
-  xAnim.current,
-  buttonClick.x,
-
-  */
 
   /* useEffect(() => {
     console.log(timeouts.bubbleTimeout);
