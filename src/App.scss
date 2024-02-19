@@ -11,6 +11,7 @@ body, html {
     }
     background-color: $baseBg;
     overflow: hidden;
+    user-select: none;
 }
 
 .bg-anim {
