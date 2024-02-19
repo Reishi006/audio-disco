@@ -1,6 +1,45 @@
 import { useState, useEffect, useRef } from 'react';
 
 import './App.scss';
+import audioFile from './Mega Hyper Ultrastorm.mp3';
+
+const audioCtx = new AudioContext();
+
+let audioBuffer = null;
+
+const loadAudio = (url) => {
+    const request = new XMLHttpRequest();
+    request.open('GET', url, true);
+    request.responseType = 'arraybuffer';
+    request.onload = function() {
+        audioCtx.decodeAudioData(request.response, function(buffer) {
+            audioBuffer = buffer;
+        });
+    };
+    request.send();
+};
+
+const playAudio = () => {
+  const source = audioCtx.createBufferSource();
+  source.buffer = audioBuffer;
+  source.connect(audioCtx.destination);
+  source.start();
+};
+
+const resumeAudioContext = async () => {
+  if (audioCtx.state === 'suspended') {
+      await audioCtx.resume();
+  }
+};
+
+loadAudio(audioFile);
+const handlePlayButtonClick = () => {
+  resumeAudioContext().then(() => {
+    playAudio();
+  });
+};
+
+
 
 function App() {
   const bgAnim = useRef(null);
@@ -37,15 +76,20 @@ function App() {
   const animBg = () => {
     let time = 300;
 
+    if (timeouts.current.bgTimeout) {
+      clearTimeout(timeouts.current.bgTimeout);
+      console.log(`bgTimeout cleared`);
+    }
+
     let el = bgAnim.current;
     el.style.display = 'flex';
     el.style.animation = 'none';
     void el.offsetWidth;
     el.style.animation = `.${time/100}s fading 1 backwards`;
 
-    setTimeout(() => {
+    timeouts.current.bgTimeout = setTimeout(() => {
       el.style.display = `none`;
-    },  time);
+    },  time - 10);
 
   }
 
@@ -250,6 +294,12 @@ function App() {
               onClick={bubbleAnimation}
               style={buttonClick.bubble ? styles.activeButton : styles.notActiveButton}
             >B</div>
+            <div 
+            className='control'
+            onClick={handlePlayButtonClick}
+            >
+              Play
+            </div>
         </div>
       </div>
 
