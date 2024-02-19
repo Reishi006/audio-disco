@@ -33,6 +33,7 @@ const resumeAudioContext = async () => {
 };
 
 loadAudio(audioFile);
+
 const handlePlayButtonClick = () => {
   resumeAudioContext().then(() => {
     playAudio();
@@ -72,9 +73,10 @@ function App() {
     bubble: false,
   });
 
+  let baseTime = 400;
 
   const animBg = () => {
-    let time = 300;
+    let time = baseTime;
 
     if (timeouts.current.bgTimeout) {
       clearTimeout(timeouts.current.bgTimeout);
@@ -85,7 +87,7 @@ function App() {
     el.style.display = 'flex';
     el.style.animation = 'none';
     void el.offsetWidth;
-    el.style.animation = `.${time/100}s fading 1 backwards`;
+    el.style.animation = `${time/1000}s fading 1 backwards`;
 
     timeouts.current.bgTimeout = setTimeout(() => {
       el.style.display = `none`;
@@ -235,12 +237,13 @@ function App() {
     void elm.offsetWidth;
 
     elm.style.display = `flex`;
-    elm.style.animation = `.${t/100}s fading 1 backwards`;
+    elm.style.animation = `${t/1000}s fading 1 backwards`;
 
     setTimeout(() => {
       setButtonClick({...buttonClick,
         [btnclick]: false,
       });
+      console.log(`buttonClick %c false ${t/1000}`, 'color: lightblue');
     }, t/3);
 
     timeouts.current[tout] = setTimeout(() => {
@@ -253,13 +256,13 @@ function App() {
   
 
   const upAnimation = () => {
-    handleAnimation(300, 'upTimeout', upAnim.current, 'up', false);
+    handleAnimation(baseTime, 'upTimeout', upAnim.current, 'up', false);
   }
   const midAnimation = () => {
-    handleAnimation(300, 'midTimeout', midAnim.current, 'mid', false);
+    handleAnimation(baseTime, 'midTimeout', midAnim.current, 'mid', false);
   }
   const downAnimation = () => {
-    handleAnimation(300, 'downTimeout', downAnim.current, 'down', false);
+    handleAnimation(baseTime, 'downTimeout', downAnim.current, 'down', false);
   }
   const bubbleAnimation = () => {
     handleAnimation(500, 'bubbleTimeout', bubbleAnim.current, 'bubble', true);
