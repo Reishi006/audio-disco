@@ -129,25 +129,8 @@ body, html {
     z-index: 1;
 }
 
-/* .up-anim {
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.0), rgb(50, 192, 192));
-}
-
-.mid-anim {
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.0) 0%, rgb(50, 192, 192) 50%, rgba(0, 0, 0, 0.0) 100%);
-}
-
-.down-anim {
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.0), rgb(50, 192, 192));
-} */
-
-.gradient-animation {
-    animation: .6s fading 1;
-}
-
 @keyframes fading {
     100% {
-        background: transparent;
         opacity: 0;
     }
 }
