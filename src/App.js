@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 
+import Warning from './Warning';
+
 import './App.scss';
 import audioFile from './Mega Hyper Ultrastorm.mp3';
 
@@ -59,6 +61,9 @@ function App() {
     bubbleTimeout: 0,
   });
 
+
+  const [displayed, setDisplayed] = useState(false);
+
   const [colorsState, setcolorsState] = useState({
     red: 50,
     green: 192,
@@ -72,6 +77,8 @@ function App() {
     down: false,
     bubble: false,
   });
+
+  //Animations ----->
 
   let baseTime = 400;
 
@@ -96,19 +103,28 @@ function App() {
   }
 
   const animKey = (e) => {
-    if (e.key === 'a' || e.key === 'z') {
-      upAnimation();
-    }
-    if (e.key === 's' || e.key === 'x') {
-      midAnimation();
-    }
-    if (e.key === 'd' || e.key === 'c') {
-      downAnimation();
-    }
-    if (e.key === 'b') {
-      bubbleAnimation();
-    }
+      if (e.key === 'a' || e.key === 'z') {
+        displayed && upAnimation();
+      }
+      if (e.key === 's' || e.key === 'x') {
+        displayed && midAnimation();
+      }
+      if (e.key === 'd' || e.key === 'c') {
+        displayed && downAnimation();
+      }
+      if (e.key === 'b') {
+        displayed && bubbleAnimation();
+      }
   }
+
+  useEffect(() => {
+      document.addEventListener('keydown', animKey);
+      console.log(`displayed`);
+
+      return () => {
+        document.removeEventListener('keydown', animKey);
+      };
+  }, [displayed]);
 
 
   useEffect(() => {
@@ -180,14 +196,6 @@ function App() {
       filter: `hue-rotate(${colorsState.hueRotate + 20}deg)`,
     }
   }
-
-  useEffect(() => {
-    document.addEventListener('keydown', animKey);
-
-    return () => {
-      document.removeEventListener('keydown', animKey);
-    };
-  }, []);
 
   const elements = [1, 2, 3, 4, 5, 6];
 
@@ -270,6 +278,8 @@ function App() {
 
   return (
     <>
+
+      <Warning setDisplayed={setDisplayed}></Warning>
       
       <div className='app'>
         <div className='controls-container' style={styles.controlContainer}>
@@ -281,13 +291,13 @@ function App() {
             >Up</div>
             <div 
               className='control' 
-              onKeyDown={animKey} 
+              onKeyDown={animKey}  
               onClick={midAnimation}
               style={buttonClick.mid ? styles.activeButton : styles.notActiveButton}
             >Mid</div>
             <div 
               className='control' 
-              onKeyDown={animKey} 
+              onKeyDown={animKey}  
               onClick={downAnimation}
               style={buttonClick.down ? styles.activeButton : styles.notActiveButton}
             >Down</div>
