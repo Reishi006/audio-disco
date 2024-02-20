@@ -16,6 +16,14 @@ body, html {
     user-select: none;
 }
 
+@mixin whiteBlack ($col) {
+    @if lightness($col) < 50 {
+        color: adjust-color($color: $col, $red: 150, $green: 150, $blue: 150);
+    } @else {
+        color: black;
+    }
+}
+
 .invisible-div {
     width: 100%;
     height: 100vh;
@@ -25,7 +33,11 @@ body, html {
     z-index: $invisible-div;
 }
 
+
+$warningColor: #dd0000;
+
 .warning-container {
+
     width: 50%;
     min-height: 33%;
 
@@ -41,7 +53,8 @@ body, html {
     text-align: center;
 
     border-radius: 20px;
-    background-color: #c7c7c7;
+    background-color: $adjustedBg;
+    @include whiteBlack($adjustedBg);
 
     z-index: $invisible-div + 1;
 
@@ -57,7 +70,7 @@ body, html {
         justify-content: center;
         align-items: center;
 
-        color: red;
+        color: $warningColor;
         font: {
             size: $mainSize + 6px;
             weight: bold;
@@ -73,7 +86,7 @@ body, html {
     justify-content: right;
 
     div {
-        color: red;
+        color: $warningColor;
         font-weight: bold;
     }
 }
@@ -137,14 +150,6 @@ body, html {
 @keyframes breathe {
     50% {
         box-shadow: 0px 0px 50px adjust-color($baseBg, $red: 40, $green: 40, $blue: 40);
-    }
-}
-
-@mixin whiteBlack ($col) {
-    @if lightness($col) < 50 {
-        color: adjust-color($color: $col, $red: 150, $green: 150, $blue: 150);
-    } @else {
-        color: black;
     }
 }
 
