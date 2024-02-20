@@ -3,6 +3,8 @@ $mainSize: 36px;
 $baseBg: #36383f;
 $adjustedBg: adjust-color($baseBg, $red: -25, $green: -25, $blue: -25);
 
+$invisible-div: 3;
+
 body, html { 
     min-height: 100vh;
     font: {
@@ -13,6 +15,69 @@ body, html {
     overflow: hidden;
     user-select: none;
 }
+
+.invisible-div {
+    width: 100%;
+    height: 100vh;
+
+    position: relative;
+
+    z-index: $invisible-div;
+}
+
+.warning-container {
+    width: 50%;
+    min-height: 33%;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    padding: .5em;
+
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+    border-radius: 20px;
+    background-color: #c7c7c7;
+
+    z-index: $invisible-div + 1;
+
+    div:nth-child(2) {
+        flex: 5;
+    }
+
+
+    div:nth-child(2) > div:nth-child(1) {
+        margin: .4em;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        color: red;
+        font: {
+            size: $mainSize + 6px;
+            weight: bold;
+        }
+    }
+}
+
+.warning-close {
+    margin: 0 .3em;
+
+    flex: 1;
+    display: flex;
+    justify-content: right;
+
+    div {
+        color: red;
+        font-weight: bold;
+    }
+}
+
 
 .bg-anim {
     width: 100%;
