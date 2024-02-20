@@ -5,41 +5,75 @@ import Warning from './Warning';
 import './App.scss';
 import audioFile from './Mega Hyper Ultrastorm.mp3';
 
-const audioCtx = new AudioContext();
-
+let audioCtx = null;
 let audioBuffer = null;
+let analyser = null;
+let source = null;
 
 const loadAudio = (url) => {
-    const request = new XMLHttpRequest();
-    request.open('GET', url, true);
-    request.responseType = 'arraybuffer';
-    request.onload = function() {
-        audioCtx.decodeAudioData(request.response, function(buffer) {
-            audioBuffer = buffer;
-        });
-    };
-    request.send();
+  return new Promise((resolve, reject) => {
+      const request = new XMLHttpRequest();
+      request.open('GET', url, true);
+      request.responseType = 'arraybuffer';
+      request.onload = function() {
+          audioCtx.decodeAudioData(request.response, function(buffer) {
+              audioBuffer = buffer;
+              resolve(audioBuffer);
+          });
+      };
+      request.onerror = function() {
+          reject(new Error('Network error'));
+      };
+      request.send();
+  });
 };
 
 const playAudio = () => {
-  const source = audioCtx.createBufferSource();
+  source = audioCtx.createBufferSource();
+  analyser = audioCtx.createAnalyser();
+  analyser.fftSize = 2048;
   source.buffer = audioBuffer;
-  source.connect(audioCtx.destination);
-  source.start();
+  source.connect(analyser);
+  analyser.connect(audioCtx.destination)
+  source.start(0);
+  source.stop(2);
 };
 
 const resumeAudioContext = async () => {
   if (audioCtx.state === 'suspended') {
-      await audioCtx.resume();
-  }
+    await audioCtx.resume();
+  } /* else if (audioCtx.state === 'running') {
+    await audioCtx
+  } */
 };
 
-loadAudio(audioFile);
+const analyzeAudio = () => {
+  const bufferLength = analyser.frequencyBinCount;
+  const dataArray = new Uint8Array(bufferLength);
 
-const handlePlayButtonClick = () => {
-  resumeAudioContext().then(() => {
-    playAudio();
-  });
+  analyser.getByteFrequencyData(dataArray)
+
+  console.log(audioCtx.state);
+  console.log(dataArray);
+  /* for (let i = 0; i < dataArray.length; i++) {
+    if (dataArray[i] !== 0) console.log(dataArray[i]);
+  } */
+}
+
+const handlePlayButtonClick = async () => {
+  try {
+      if (audioCtx === null) {
+        audioCtx = new AudioContext();
+        await loadAudio(audioFile);
+        await resumeAudioContext();
+        playAudio();
+        setTimeout(() => {
+          analyzeAudio();
+        }, 500);
+      }
+  } catch (error) {
+      console.error('Failed to load audio:', error);
+  }
 };
 
 
@@ -138,7 +172,6 @@ function App() {
       }));
       
     }, 250);
-    console.log(`interval: ${colorsState.red}`);
     return () => clearInterval(interval);
   }, []);
 
