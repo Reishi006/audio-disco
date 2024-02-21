@@ -5,6 +5,16 @@ $adjustedBg: adjust-color($baseBg, $red: -25, $green: -25, $blue: -25);
 
 $invisible-div: 3;
 
+//SIZES
+
+$mobileS: 320px;
+$mobileM: 375px;
+$mobileL: 425px;
+$tablet: 768px;
+$laptop: 1024px;
+$laptopL: 1440px;
+$fourK: 2560px;
+
 body, html { 
     min-height: 100vh;
     font: {
@@ -137,6 +147,7 @@ $warningColor: #dd0000;
 }
 
 .controls-container {
+    min-width: $mobileS - 70px;
     justify-content: space-between;
     align-items: center;
     border-radius: 10px;
@@ -204,5 +215,16 @@ $warningColor: #dd0000;
 @keyframes fading {
     100% {
         opacity: 0;
+    }
+}
+
+
+
+//===== MEDIA QUERIES =====
+
+@media (max-width: 1024px) {
+    .controls-container {
+        width: 33%;
+        flex-direction: column;
     }
 }
