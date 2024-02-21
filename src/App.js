@@ -31,7 +31,7 @@ const loadAudio = (url) => {
 const playAudio = () => {
   source = audioCtx.createBufferSource();
   analyser = audioCtx.createAnalyser();
-  analyser.fftSize = 2048;
+  analyser.fftSize = 128;
   source.buffer = audioBuffer;
   source.connect(analyser);
   analyser.connect(audioCtx.destination)
@@ -51,10 +51,21 @@ const analyzeAudio = () => {
   const bufferLength = analyser.frequencyBinCount;
   const dataArray = new Uint8Array(bufferLength);
 
-  analyser.getByteFrequencyData(dataArray)
-
   console.log(audioCtx.state);
-  console.log(dataArray);
+  
+  let count = 0;
+
+  const timeout = () => {
+    if (count < 100) {
+      analyser.getByteFrequencyData(dataArray);
+      console.log(dataArray);
+      count++;
+      setTimeout(timeout, 10);
+    }
+  }
+  
+  timeout();
+
   /* for (let i = 0; i < dataArray.length; i++) {
     if (dataArray[i] !== 0) console.log(dataArray[i]);
   } */
