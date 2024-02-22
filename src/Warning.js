@@ -1,23 +1,16 @@
-import { useRef } from 'react';
 
 
 function Warning({ setDisplayed }) {
-    const invisibleDivRef = useRef(null);
-    const warningRef = useRef(null);
-
     const closeWarning = () => {
-        invisibleDivRef.current.style.display = 'none';
-        warningRef.current.style.display = 'none';
-
         setDisplayed(true);
     }
 
     return (
         <div>
-            <div className='invisible-div' ref={invisibleDivRef} onClick={closeWarning}>
+            <div className='invisible-div'  onClick={closeWarning}>
             
             </div>
-            <div className='warning-container' ref={warningRef}>
+            <div className='warning-container' >
                 <div className='warning-close'>
                     <div onClick={closeWarning}>x</div>
                 </div>
