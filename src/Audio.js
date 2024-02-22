@@ -4,7 +4,7 @@ import './App.scss';
 
 import audioFile from './Mega Hyper Ultrastorm.mp3';
 
-function Audio() {
+function Audio({ setDataArray }) {
 
 const [playing, setPlaying] = useState(false);
 
@@ -69,7 +69,8 @@ const analyzeAudio = () => {
   const timeout = () => {
     if (count < 100) {
       analyser.getByteFrequencyData(dataArray);
-      console.log(dataArray);
+      //console.log(dataArray);
+      setDataArray(dataArray);
       count++;
       setTimeout(timeout, 10);
     }
