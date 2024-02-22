@@ -1,10 +1,14 @@
+import { useState, useEffect } from 'react';
+
 import './App.scss';
 
 import audioFile from './Mega Hyper Ultrastorm.mp3';
 
 function Audio() {
 
-  let audioCtx = null;
+const [playing, setPlaying] = useState(false);
+
+let audioCtx = null;
 let audioBuffer = null;
 let analyser = null;
 let source = null;
@@ -28,6 +32,7 @@ const loadAudio = (url) => {
 };
 
 const playAudio = () => {
+  let time = 3000;
   source = audioCtx.createBufferSource();
   analyser = audioCtx.createAnalyser();
   analyser.fftSize = 128;
@@ -35,8 +40,15 @@ const playAudio = () => {
   source.connect(analyser);
   analyser.connect(audioCtx.destination)
   source.start(0);
-  source.stop(3);
+  source.stop(time/1000);
+  setTimeout(() => {
+    setPlaying(false);
+  }, time);
 };
+
+useEffect(() => {
+  console.log(playing);
+}, [playing]);
 
 const resumeAudioContext = async () => {
   if (audioCtx.state === 'suspended') {
@@ -73,6 +85,7 @@ const analyzeAudio = () => {
 const handlePlayButtonClick = async () => {
   try {
       if (audioCtx === null) {
+        setPlaying(true);
         audioCtx = new AudioContext();
         await loadAudio(audioFile);
         await resumeAudioContext();
@@ -89,7 +102,7 @@ const handlePlayButtonClick = async () => {
   return (
     <div 
     className='control'
-    onClick={handlePlayButtonClick}
+    onClick={(playing === false) ? handlePlayButtonClick : undefined}
     >
       Play
     </div>
