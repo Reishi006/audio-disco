@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 
 import Warning from './Warning';
 import Audio from './Audio';
+import Canvas from './Canvas';
 
 import './App.scss';
 
@@ -25,6 +26,7 @@ function App() {
 
 
   const [displayed, setDisplayed] = useState(false);
+  const [display, setDisplay] = useState('none');
 
   const [colorsState, setcolorsState] = useState({
     red: 50,
@@ -40,6 +42,10 @@ function App() {
     bubble: false,
   });
 
+
+  useEffect(() => {
+    if (displayed === true) setDisplay('flex');
+  }, [displayed]);
   
   //Animations ----->
 
@@ -184,7 +190,7 @@ function App() {
 
   const handleAnimation = (t, tout, elm, btnclick, bubble) => {
 
-    console.log(`timer: ${timeouts[tout]}`);
+    console.log(`timer: ${timeouts.current[tout]}`);
     if (timeouts.current[tout]) {
       clearTimeout(timeouts.current[tout]);
       console.log(`timer cleared`);
@@ -233,9 +239,8 @@ function App() {
 
   return (
     <>
+      {(!displayed) ? <Warning setDisplayed={setDisplayed}></Warning> : ''}
 
-      <Warning setDisplayed={setDisplayed}></Warning>
-      
       <div className='app'>
         <div className='controls-container' style={styles.controlContainer}>
             <div 
@@ -311,6 +316,9 @@ function App() {
           ))}
         </div>
       </div>
+
+      {(displayed) ? <Canvas width={500} height={500} display={{display}}></Canvas> : ''}
+      
     </>
   );
 }
