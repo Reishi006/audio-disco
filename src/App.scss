@@ -26,6 +26,14 @@ body, html {
     user-select: none;
 }
 
+canvas {
+    display: none;
+    position: absolute;
+    bottom: 0;
+
+    z-index: $invisible-div - 1;
+}
+
 @mixin whiteBlack ($col) {
     @if lightness($col) < 50 {
         color: adjust-color($color: $col, $red: 150, $green: 150, $blue: 150);
