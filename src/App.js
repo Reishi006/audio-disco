@@ -72,6 +72,9 @@ function App() {
   }
 
   const animKey = (e) => {
+      if (e.key === ' ' || e.key === 'Enter') {
+        setDisplayed(true);
+      }
       if (e.key === 'a' || e.key === 'z') {
         displayed && upAnimation();
       }
@@ -95,9 +98,11 @@ function App() {
       };
   }, [displayed]);
 
+  const controlsRef = useRef(null);
 
   useEffect(() => {
-    let inc = 5;
+    console.log(controlsRef.current.offsetWidth);
+    let inc = 2;
     const interval = setInterval (() => {
       setcolorsState((prevColors) => ({
         /* red: (prevColors.red + inc) %  256,
@@ -106,7 +111,7 @@ function App() {
         hueRotate: (prevColors.hueRotate + inc) % 360,
       }));
       
-    }, 250);
+    }, 50);
     return () => clearInterval(interval);
   }, []);
 
@@ -237,12 +242,24 @@ function App() {
     handleAnimation(500, 'bubbleTimeout', bubbleAnim.current, 'bubble', true);
   }
 
+  const setDataArray = (dataArray) => {
+    console.log(dataArray);
+  }
+
   return (
     <>
       {(!displayed) ? <Warning setDisplayed={setDisplayed}></Warning> : ''}
 
       <div className='app'>
-        <div className='controls-container' style={styles.controlContainer}>
+        {(displayed) ? 
+          <Canvas 
+            width={500} 
+            height={500} 
+            display={{display}}
+            huerotate={colorsState.hueRotate}
+            ></Canvas> 
+          : ''}
+        <div className='controls-container' ref={controlsRef} style={styles.controlContainer}>
             <div 
               className='control'
               onKeyDown={animKey} 
@@ -267,7 +284,7 @@ function App() {
               onClick={bubbleAnimation}
               style={buttonClick.bubble ? styles.activeButton : styles.notActiveButton}
             >B</div>
-            <Audio></Audio>
+            <Audio setDataArray={setDataArray}></Audio>
         </div>
       </div>
 
@@ -316,8 +333,6 @@ function App() {
           ))}
         </div>
       </div>
-
-      {(displayed) ? <Canvas width={500} height={500} display={{display}}></Canvas> : ''}
       
     </>
   );
