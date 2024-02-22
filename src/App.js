@@ -1,92 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 
 import Warning from './Warning';
+import Audio from './Audio';
 
 import './App.scss';
-import audioFile from './Mega Hyper Ultrastorm.mp3';
-
-let audioCtx = null;
-let audioBuffer = null;
-let analyser = null;
-let source = null;
-
-const loadAudio = (url) => {
-  return new Promise((resolve, reject) => {
-      const request = new XMLHttpRequest();
-      request.open('GET', url, true);
-      request.responseType = 'arraybuffer';
-      request.onload = function() {
-          audioCtx.decodeAudioData(request.response, function(buffer) {
-              audioBuffer = buffer;
-              resolve(audioBuffer);
-          });
-      };
-      request.onerror = function() {
-          reject(new Error('Network error'));
-      };
-      request.send();
-  });
-};
-
-const playAudio = () => {
-  source = audioCtx.createBufferSource();
-  analyser = audioCtx.createAnalyser();
-  analyser.fftSize = 128;
-  source.buffer = audioBuffer;
-  source.connect(analyser);
-  analyser.connect(audioCtx.destination)
-  source.start(0);
-  source.stop(2);
-};
-
-const resumeAudioContext = async () => {
-  if (audioCtx.state === 'suspended') {
-    await audioCtx.resume();
-  } /* else if (audioCtx.state === 'running') {
-    await audioCtx
-  } */
-};
-
-const analyzeAudio = () => {
-  const bufferLength = analyser.frequencyBinCount;
-  const dataArray = new Uint8Array(bufferLength);
-
-  console.log(audioCtx.state);
-  
-  let count = 0;
-
-  const timeout = () => {
-    if (count < 100) {
-      analyser.getByteFrequencyData(dataArray);
-      console.log(dataArray);
-      count++;
-      setTimeout(timeout, 10);
-    }
-  }
-  
-  timeout();
-
-  /* for (let i = 0; i < dataArray.length; i++) {
-    if (dataArray[i] !== 0) console.log(dataArray[i]);
-  } */
-}
-
-const handlePlayButtonClick = async () => {
-  try {
-      if (audioCtx === null) {
-        audioCtx = new AudioContext();
-        await loadAudio(audioFile);
-        await resumeAudioContext();
-        playAudio();
-        setTimeout(() => {
-          analyzeAudio();
-        }, 500);
-      }
-  } catch (error) {
-      console.error('Failed to load audio:', error);
-  }
-};
-
 
 
 function App() {
@@ -123,6 +40,7 @@ function App() {
     bubble: false,
   });
 
+  
   //Animations ----->
 
   let baseTime = 400;
@@ -186,9 +104,6 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
-  /* useEffect(() => {
-    console.log(colorsState.hueRotate);
-  }, [colorsState.hueRotate]); */
 
   const getGradientStyle = (anim) => {
     if (anim === 'up') {
@@ -266,10 +181,6 @@ function App() {
       ref.style.background = `radial-gradient(circle, rgb(${r}, ${g}, ${b}) 0%, #00000000 50%)`;
     });
   }
-
-  /* useEffect(() => {
-    console.log(timeouts.bubbleTimeout);
-  }, [timeouts.bubbleTimeout, buttonClick.bubble]); */
 
   const handleAnimation = (t, tout, elm, btnclick, bubble) => {
 
@@ -351,12 +262,7 @@ function App() {
               onClick={bubbleAnimation}
               style={buttonClick.bubble ? styles.activeButton : styles.notActiveButton}
             >B</div>
-            <div 
-            className='control'
-            onClick={handlePlayButtonClick}
-            >
-              Play
-            </div>
+            <Audio></Audio>
         </div>
       </div>
 
