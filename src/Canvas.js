@@ -7,18 +7,25 @@ function Canvas(props) {
     const xRef = useRef(0);
     const yRef = useRef(props.height);
 
-    
-
     const draw = () => {
         ctx.clearRect(0,  0, canvasRef.current.width, canvasRef.current.height);
 
+        const between = 1;
         if (props.uintarray != null) {
-            const size = Math.floor(props.width / props.uintarray.length);
+            const size = Math.floor(props.width / (props.uintarray.length));
+            if (xRef.current === 0) {
+                const offset = 
+                (canvasRef.current.offsetWidth 
+                    - (props.uintarray.length
+                        * (size + between))
+                ) / 2;
+                xRef.current = offset;
+            }
             for (let i = 0; i < props.uintarray.length; i++) {
                 ctx.fillStyle = 'rgb(50, 192, 192)';
                 ctx.filter = `hue-rotate(${props.huerotate}deg)`;
-                ctx.fillRect(xRef.current, yRef.current, size, -props.uintarray[i]);
-                xRef.current += size;
+                ctx.fillRect(xRef.current, yRef.current, size, -props.uintarray[i] - 10);
+                xRef.current += size + between;
             }
             xRef.current = 0;
         }
