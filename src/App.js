@@ -8,6 +8,11 @@ import './App.scss';
 
 
 function App() {
+  const controlsRef = useRef(null);
+  const cBorderRad = useRef(null);
+
+  const UintArray = useRef(null);
+
   const bgAnim = useRef(null);
   const upAnim = useRef(null);
   const midAnim = useRef(null);
@@ -98,9 +103,12 @@ function App() {
       };
   }, [displayed]);
 
-  const controlsRef = useRef(null);
+  
+  let controlBorderRadius = null;
 
   useEffect(() => {
+    controlBorderRadius = window.getComputedStyle(controlsRef.current).borderRadius;
+    cBorderRad.current = Number(controlBorderRadius.slice(0, controlBorderRadius.length - 2));
     console.log(controlsRef.current.offsetWidth);
     let inc = 2;
     const interval = setInterval (() => {
@@ -243,8 +251,27 @@ function App() {
   }
 
   const setDataArray = (dataArray) => {
-    console.log(dataArray);
+    UintArray.current = dataArray;
+    //console.log(UintArray.current);
   }
+
+  const runningRef = useRef(false);
+
+  useEffect(() => {
+    let bpm = 220;
+    let index = 7;
+    if (UintArray.current !== null) {
+      
+      if (UintArray.current[index] > 218 && !runningRef.current) {
+        runningRef.current = true;
+        setTimeout(() => {
+          runningRef.current = false
+        }, bpm/2);
+        bubbleAnimation();
+        console.log(UintArray.current[index]);
+      }
+    }
+  }, [setDataArray]);
 
   return (
     <>
@@ -253,10 +280,11 @@ function App() {
       <div className='app'>
         {(displayed) ? 
           <Canvas 
-            width={500} 
+            width={controlsRef.current.offsetWidth - (cBorderRad.current*2)} 
             height={500} 
             display={{display}}
             huerotate={colorsState.hueRotate}
+            uintarray={UintArray.current}
             ></Canvas> 
           : ''}
         <div className='controls-container' ref={controlsRef} style={styles.controlContainer}>
