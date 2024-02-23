@@ -33,12 +33,15 @@ const loadAudio = (url) => {
 
 const playAudio = () => {
   let time = 10;
+  let gainNode = audioCtx.createGain();
+  gainNode.gain.value = 0.2;
+  gainNode.connect(audioCtx.destination);
   source = audioCtx.createBufferSource();
   analyser = audioCtx.createAnalyser();
   analyser.fftSize = 128;
   source.buffer = audioBuffer;
   source.connect(analyser);
-  analyser.connect(audioCtx.destination)
+  analyser.connect(gainNode);
   source.start(0);
   source.stop(time);
   setTimeout(() => {
