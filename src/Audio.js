@@ -32,7 +32,7 @@ const loadAudio = (url) => {
 };
 
 const playAudio = () => {
-  let time = 3000;
+  let time = 10;
   source = audioCtx.createBufferSource();
   analyser = audioCtx.createAnalyser();
   analyser.fftSize = 128;
@@ -40,10 +40,10 @@ const playAudio = () => {
   source.connect(analyser);
   analyser.connect(audioCtx.destination)
   source.start(0);
-  source.stop(time/1000);
+  source.stop(time);
   setTimeout(() => {
     setPlaying(false);
-  }, time);
+  }, time*1000);
 };
 
 useEffect(() => {
@@ -67,7 +67,7 @@ const analyzeAudio = () => {
   let count = 0;
 
   const timeout = () => {
-    if (count < 100) {
+    if (count < 1000) {
       analyser.getByteFrequencyData(dataArray);
       //console.log(dataArray);
       setDataArray(dataArray);
@@ -93,7 +93,7 @@ const handlePlayButtonClick = async () => {
         playAudio();
         setTimeout(() => {
           analyzeAudio();
-        }, 500);
+        }, 300);
       }
   } catch (error) {
       console.error('Failed to load audio:', error);
