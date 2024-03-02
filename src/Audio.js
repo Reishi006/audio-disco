@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 import './App.scss';
 
-import audioFile from './Mega Hyper Ultrastorm.mp3';
+import audioFile from './OVSKY - Lucky Charm [NCS Release].mp3';
 
 function Audio({ setDataArray }) {
 
@@ -12,6 +12,8 @@ let audioCtx = null;
 let audioBuffer = null;
 let analyser = null;
 let source = null;
+
+let time = 300;
 
 const loadAudio = (url) => {
   return new Promise((resolve, reject) => {
@@ -32,13 +34,12 @@ const loadAudio = (url) => {
 };
 
 const playAudio = () => {
-  let time = 10;
   let gainNode = audioCtx.createGain();
   gainNode.gain.value = 0.2;
   gainNode.connect(audioCtx.destination);
   source = audioCtx.createBufferSource();
   analyser = audioCtx.createAnalyser();
-  analyser.fftSize = 128;
+  analyser.fftSize = 256;
   source.buffer = audioBuffer;
   source.connect(analyser);
   analyser.connect(gainNode);
@@ -70,7 +71,7 @@ const analyzeAudio = () => {
   let count = 0;
 
   const timeout = () => {
-    if (count < 1000) {
+    if (count < time*100) {
       analyser.getByteFrequencyData(dataArray);
       //console.log(dataArray);
       setDataArray(dataArray);
