@@ -258,17 +258,34 @@ function App() {
   const runningRef = useRef(false);
 
   useEffect(() => {
-    let bpm = 220;
-    let index = 7;
+    let bpm = 122;
+    let index = 14;
     if (UintArray.current !== null) {
       
-      if (UintArray.current[index] > 218 && !runningRef.current) {
+      if (UintArray.current[index] > 220 && !runningRef.current) {
         runningRef.current = true;
         setTimeout(() => {
           runningRef.current = false
         }, bpm/2);
         bubbleAnimation();
-        console.log(UintArray.current[index]);
+        //console.log(UintArray.current[index]);
+      }
+      if ((UintArray.current[100] > 100 && UintArray.current[101] > 100) && !runningRef.current) {
+        runningRef.current = true;
+        setTimeout(() => {
+          runningRef.current = false
+        }, bpm/2);
+        upAnimation();
+        //console.log(UintArray.current[index]);
+      }
+      if ((UintArray.current[0] > 254 
+        && UintArray.current[1] > 254) && !runningRef.current) {
+        runningRef.current = true;
+        setTimeout(() => {
+          runningRef.current = false
+        }, bpm);
+        downAnimation();
+        //console.log(UintArray.current[index]);
       }
     }
   }, [setDataArray]);
@@ -362,6 +379,20 @@ function App() {
         </div>
       </div>
       
+      <div className='copyright' 
+      style={{
+        opacity: (UintArray.current) ? 1 : 0,
+      }}>
+        <pre>
+          Song: <b style={{
+            filter: `hue-rotate(${colorsState.hueRotate}deg)`,
+            color: `rgb(50, 192, 192)`,
+            }}>OVSKY - Lucky Charm [NCS Release]</b><br></br>
+          Music provided by NoCopyrightSounds<br></br>
+          Free Download/Stream: http://NCS.io/LuckyCharm<br></br>
+          Watch: http://youtu.be/
+        </pre>
+      </div>
     </>
   );
 }
