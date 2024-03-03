@@ -389,8 +389,8 @@ function App() {
             color: `rgb(50, 192, 192)`,
             }}>OVSKY - Lucky Charm [NCS Release]</b><br></br>
           Music provided by NoCopyrightSounds<br></br>
-          Free Download/Stream: http://NCS.io/LuckyCharm<br></br>
-          Watch: http://youtu.be/
+          Free Download/Stream: <a href='http://NCS.io/LuckyCharm'>http://NCS.io/LuckyCharm</a><br></br>
+          Watch: <a href='http://youtu.be/'>http://youtu.be/</a>
         </pre>
       </div>
     </>
