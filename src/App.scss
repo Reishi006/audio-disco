@@ -15,6 +15,14 @@ $laptop: 1024px;
 $laptopL: 1440px;
 $fourK: 2560px;
 
+@mixin whiteBlack ($col) {
+    @if lightness($col) < 50 {
+        color: adjust-color($color: $col, $red: 150, $green: 150, $blue: 150);
+    } @else {
+        color: black;
+    }
+}
+
 body, html { 
     min-height: 100vh;
     
@@ -27,6 +35,12 @@ body, html {
 
     overflow: hidden;
     user-select: none;
+
+    a {
+        text-decoration: none;
+
+        color: adjust-color($color: $baseBg, $red: 80, $green: 80, $blue: 180);
+    }
 }
 
 canvas {
@@ -36,14 +50,6 @@ canvas {
     display: none;
 
     z-index: $invisible-div - 1;
-}
-
-@mixin whiteBlack ($col) {
-    @if lightness($col) < 50 {
-        color: adjust-color($color: $col, $red: 150, $green: 150, $blue: 150);
-    } @else {
-        color: black;
-    }
 }
 
 .invisible-div {
