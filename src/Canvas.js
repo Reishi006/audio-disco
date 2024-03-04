@@ -15,16 +15,23 @@ function Canvas(props) {
             const size = Math.floor(props.width / (props.uintarray.length));
             if (xRef.current === 0) {
                 const offset = 
-                (canvasRef.current.offsetWidth 
+                (
+                    canvasRef.current.offsetWidth 
                     - (props.uintarray.length
                         * (size + between))
-                ) / 2;
+                ) / 1;
                 xRef.current = offset;
             }
+            
             for (let i = 0; i < props.uintarray.length; i++) {
+
                 ctx.fillStyle = 'rgb(50, 192, 192)';
                 ctx.filter = `hue-rotate(${props.huerotate}deg)`;
-                ctx.fillRect(xRef.current, yRef.current, size, -props.uintarray[i] - 10);
+                ctx.fillRect(xRef.current, yRef.current, size, -size);
+
+                ctx.fillStyle = 'rgb(50, 192, 192)';
+                ctx.filter = `hue-rotate(${props.huerotate}deg)`;
+                ctx.fillRect(xRef.current, yRef.current-size, size, -props.uintarray[i]);
                 xRef.current += size + between;
             }
             xRef.current = 0;
