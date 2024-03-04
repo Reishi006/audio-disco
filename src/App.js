@@ -262,7 +262,7 @@ function App() {
     let index = 14;
     if (UintArray.current !== null) {
       
-      if (UintArray.current[index] > 220 && !runningRef.current) {
+      if (UintArray.current[index] > 215 && !runningRef.current) {
         runningRef.current = true;
         setTimeout(() => {
           runningRef.current = false
@@ -270,12 +270,20 @@ function App() {
         bubbleAnimation();
         //console.log(UintArray.current[index]);
       }
-      if ((UintArray.current[100] > 100 && UintArray.current[101] > 100) && !runningRef.current) {
+      if ((UintArray.current[100] > 90 && UintArray.current[101] > 90) && !runningRef.current) {
         runningRef.current = true;
         setTimeout(() => {
           runningRef.current = false
         }, bpm/2);
         upAnimation();
+        //console.log(UintArray.current[index]);
+      }
+      if ((UintArray.current[79] > 120 && UintArray.current[80] > 120) && !runningRef.current) {
+        runningRef.current = true;
+        setTimeout(() => {
+          runningRef.current = false
+        }, bpm/2);
+        midAnimation();
         //console.log(UintArray.current[index]);
       }
       if ((UintArray.current[0] > 254 
