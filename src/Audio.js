@@ -8,10 +8,13 @@ function Audio({ setDataArray }) {
 
 const [playing, setPlaying] = useState(false);
 
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
 let audioCtx = null;
 let audioBuffer = null;
 let analyser = null;
 let source = null;
+let gainNode = null;
 
 let time = 300;
 
@@ -34,8 +37,8 @@ const loadAudio = (url) => {
 };
 
 const playAudio = () => {
-  let gainNode = audioCtx.createGain();
-  gainNode.gain.value = 0.2;
+  gainNode = audioCtx.createGain();
+  gainNode.gain.value = 0.15;
   gainNode.connect(audioCtx.destination);
   source = audioCtx.createBufferSource();
   analyser = audioCtx.createAnalyser();
@@ -89,7 +92,7 @@ const analyzeAudio = () => {
 
 const handlePlayButtonClick = async () => {
   try {
-      if (audioCtx === null) {
+      if (audioCtx === null && !playing) {
         setPlaying(true);
         audioCtx = new AudioContext();
         await loadAudio(audioFile);
@@ -97,7 +100,7 @@ const handlePlayButtonClick = async () => {
         playAudio();
         setTimeout(() => {
           analyzeAudio();
-        }, 300);
+        }, 50);
       }
   } catch (error) {
       console.error('Failed to load audio:', error);
@@ -109,7 +112,7 @@ const handlePlayButtonClick = async () => {
     className='control'
     onClick={(playing === false) ? handlePlayButtonClick : undefined}
     >
-      Play
+      {(playing) ? 'Stop' : 'Play'}
     </div>
   );
 }
