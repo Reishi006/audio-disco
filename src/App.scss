@@ -259,13 +259,20 @@ $warningColor: #dd0000;
     }
 }
 
+@keyframes fading-reverse {
+    100% {
+        opacity: 1;
+    }
+}
+
 .copyright {
     position: absolute;
     top: 1em;
     left: 50%;
     transform: translate(-50%);
 
-    opacity: 1;
+    display: none;
+    opacity: 0;
 
     text-align: center;
 
