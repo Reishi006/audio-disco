@@ -29,6 +29,8 @@ function App() {
     bubbleTimeout: 0,
   });
 
+  const copyrightRef = useRef(null);
+
 
   const [displayed, setDisplayed] = useState(false);
   const [display, setDisplay] = useState('none');
@@ -182,8 +184,8 @@ function App() {
       let xWin = window.innerWidth;
       let yWin = window.innerHeight;
 
-      const x = Math.floor(Math.random() * xWin) /* + (xWin * 0.05) */;
-      const y = Math.floor(Math.random() * yWin) /* + (yWin * 0.05) */;
+      const x = Math.floor(Math.random() * xWin);
+      const y = Math.floor(Math.random() * yWin);
 
       return { x, y };
     }
@@ -250,6 +252,18 @@ function App() {
     handleAnimation(500, 'bubbleTimeout', bubbleAnim.current, 'bubble', true);
   }
 
+
+  const clickAudio = () => {
+    console.log(`clickAudio`);
+    let time = 3000
+    copyrightRef.current.style.display = 'block';
+    setTimeout(() => {
+      copyrightRef.current.style.opacity = 1;
+    }, time)
+    copyrightRef.current.style.animation = `${time/1000}s fading-reverse 1 backwards`;
+  
+  }
+
   const setDataArray = (dataArray) => {
     UintArray.current = dataArray;
     //console.log(UintArray.current);
@@ -260,6 +274,7 @@ function App() {
   useEffect(() => {
     let bpm = 122;
     let index = 14;
+
     if (UintArray.current !== null) {
       
       if (UintArray.current[index] > 215 && !runningRef.current) {
@@ -276,7 +291,6 @@ function App() {
           runningRef.current = false
         }, bpm/2);
         upAnimation();
-        //console.log(UintArray.current[index]);
       }
       if ((UintArray.current[79] > 120 && UintArray.current[80] > 120) && !runningRef.current) {
         runningRef.current = true;
@@ -284,7 +298,6 @@ function App() {
           runningRef.current = false
         }, bpm/2);
         midAnimation();
-        //console.log(UintArray.current[index]);
       }
       if ((UintArray.current[0] > 254 
         && UintArray.current[1] > 254) && !runningRef.current) {
@@ -293,7 +306,6 @@ function App() {
           runningRef.current = false
         }, bpm);
         downAnimation();
-        //console.log(UintArray.current[index]);
       }
     }
   }, [setDataArray]);
@@ -387,10 +399,12 @@ function App() {
         </div>
       </div>
       
-      <div className='copyright' 
-      style={{
-        opacity: (UintArray.current) ? 1 : 0,
-      }}>
+      <div className='copyright'
+        ref={copyrightRef}
+        style={{
+          opacity: (UintArray.current) ? 1 : 0,
+        }}
+      >
         <pre>
           Song: <b style={{
             filter: `hue-rotate(${colorsState.hueRotate}deg)`,
