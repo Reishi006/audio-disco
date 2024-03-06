@@ -404,9 +404,6 @@ function App() {
       
       <div className='copyright'
         ref={copyrightRef}
-        style={{
-          opacity: (UintArray.current) ? 1 : 0,
-        }}
       >
         <pre>
           Song: <b style={{
