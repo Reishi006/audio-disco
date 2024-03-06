@@ -29,6 +29,7 @@ function App() {
     bubbleTimeout: 0,
   });
 
+
   const copyrightRef = useRef(null);
 
 
@@ -253,13 +254,13 @@ function App() {
   }
 
 
-  const clickAudio = () => {
-    console.log(`clickAudio`);
-    let time = 3000;
+  const setOpacity = (ref, t, op, animation) => {
+    console.log(`setOpacity`);
+    let time = t;
     setTimeout(() => {
-      copyrightRef.current.style.opacity = 1;
+      ref.style.opacity = op;
     }, time);
-    copyrightRef.current.style.animation = `${time/1000}s fading-reverse 1 backwards`;
+    ref.style.animation = `${time/1000}s ${animation}`;
   }
 
   const setDataArray = (dataArray) => {
@@ -349,7 +350,8 @@ function App() {
             >B</div>
             <Audio 
               setDataArray={setDataArray} 
-              clickAudio={clickAudio}
+              setOpacity={() => setOpacity(copyrightRef.current, 3000, 1, 'fading-reverse 1 backwards')}
+              setFadeout={() => setOpacity(copyrightRef.current, 1000, 0, 'fading 1 backwards')}
             ></Audio>
         </div>
       </div>
