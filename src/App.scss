@@ -260,6 +260,9 @@ $warningColor: #dd0000;
 }
 
 @keyframes fading-reverse {
+    0% {
+        opacity: 0;
+    }
     100% {
         opacity: 1;
     }
@@ -271,7 +274,7 @@ $warningColor: #dd0000;
     left: 50%;
     transform: translate(-50%);
 
-    display: none;
+    display: block;
     opacity: 0;
 
     text-align: center;
