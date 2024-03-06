@@ -4,7 +4,7 @@ import './App.scss';
 
 import audioFile from './OVSKY - Lucky Charm [NCS Release].mp3';
 
-function Audio({ setDataArray, clickAudio }) {
+function Audio({ setDataArray, setOpacity, setFadeout }) {
 
 const [playing, setPlaying] = useState(false);
 
@@ -120,15 +120,16 @@ const handlePlayButtonClick = async () => {
       setTimeout(() => {
         analyzeAudio();
       }, 50);
-      clickAudio();
+      setOpacity();
     } else {
       if (source) {
+        setFadeout();
         source.current.stop();
         source.current.disconnect();
         source.current = null;
       }
       setPlaying(false);
-      if (gainNode) {
+      /* if (gainNode) {
         gainNode.current.stop();
         gainNode.current.disconnect();
         gainNode.current = null;
@@ -137,7 +138,7 @@ const handlePlayButtonClick = async () => {
         analyser.current.stop();
         analyser.current.disconnect();
         analyser.current = null;
-      }
+      } */
     }
   } catch (error) {
     console.error('Failed to load audio:', error);
