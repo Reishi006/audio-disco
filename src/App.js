@@ -173,7 +173,7 @@ function App() {
     },
     bubbleAnim: {
       background: `radial-gradient(circle, rgb(${colorsState.red}, ${colorsState.green}, ${colorsState.blue}) 0%, #00000000 50%)`,
-      filter: `hue-rotate(${colorsState.hueRotate + 20}deg)`,
+      filter: `hue-rotate(${colorsState.hueRotate}deg)`,
     }
   }
 
@@ -255,13 +255,11 @@ function App() {
 
   const clickAudio = () => {
     console.log(`clickAudio`);
-    let time = 3000
-    copyrightRef.current.style.display = 'block';
+    let time = 3000;
     setTimeout(() => {
       copyrightRef.current.style.opacity = 1;
-    }, time)
+    }, time);
     copyrightRef.current.style.animation = `${time/1000}s fading-reverse 1 backwards`;
-  
   }
 
   const setDataArray = (dataArray) => {
@@ -349,7 +347,10 @@ function App() {
               onClick={bubbleAnimation}
               style={buttonClick.bubble ? styles.activeButton : styles.notActiveButton}
             >B</div>
-            <Audio setDataArray={setDataArray}></Audio>
+            <Audio 
+              setDataArray={setDataArray} 
+              clickAudio={clickAudio}
+            ></Audio>
         </div>
       </div>
 
