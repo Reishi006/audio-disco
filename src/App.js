@@ -254,7 +254,7 @@ function App() {
   }
 
 
-  const setOpacity = (ref, t, op, animation) => {
+  const setOpacity = (ref, t, op, d, animation) => {
     console.log(`setOpacity`);
     let time = t;
     setTimeout(() => {
@@ -350,8 +350,8 @@ function App() {
             >B</div>
             <Audio 
               setDataArray={setDataArray} 
-              setOpacity={() => setOpacity(copyrightRef.current, 3000, 1, 'fading-reverse 1 backwards')}
-              setFadeout={() => setOpacity(copyrightRef.current, 1000, 0, 'fading 1 backwards')}
+              setOpacity={() => setOpacity(copyrightRef.current, 3000, 1, 'block', 'fading-reverse 1 backwards')}
+              setFadeout={() => setOpacity(copyrightRef.current, 1000, 0, 'none', 'fading 1 forwards')}
             ></Audio>
         </div>
       </div>
