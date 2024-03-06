@@ -63,7 +63,7 @@ function Canvas(props) {
 
     return (
     <canvas 
-        ref={canvasRef} 
+        ref={canvasRef}
         {...props}
     />
     );
