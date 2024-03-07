@@ -47,6 +47,8 @@ canvas {
     margin-bottom: 10px;
     bottom: 0;
 
+    opacity: 1;
+
     display: none;
 
     z-index: $invisible-div - 1;
@@ -254,6 +256,9 @@ $warningColor: #dd0000;
 }
 
 @keyframes fading {
+    0% {
+        opacity: 1;
+    }
     100% {
         opacity: 0;
     }
@@ -274,7 +279,6 @@ $warningColor: #dd0000;
     left: 50%;
     transform: translate(-50%);
 
-    display: block;
     opacity: 0;
 
     text-align: center;
