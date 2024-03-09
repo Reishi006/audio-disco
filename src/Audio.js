@@ -53,10 +53,25 @@ const playAudio = () => {
   source.current.connect(analyser.current);
   analyser.current.connect(gainNode.current);
   source.current.start(0);
-  source.current.stop(time);
-  setTimeout(() => {
+  //source.current.stop(time);
+  /* setTimeout(() => {
+    if (source) {
+      setFadeout();
+      source.current.stop();
+      source.current.disconnect();
+      source.current = null;
+    }
     setPlaying(false);
-  }, time*1000);
+  }, time*1000); */
+  source.current.onended = function() {
+    if (source) {
+      setFadeout();
+      source.current.stop();
+      source.current.disconnect();
+      source.current = null;
+    }
+    setPlaying(false);
+  }
 };
 
 useEffect(() => {
@@ -88,10 +103,6 @@ const analyzeAudio = () => {
   }
   
   timeout();
-
-  /* for (let i = 0; i < dataArray.length; i++) {
-    if (dataArray[i] !== 0) console.log(dataArray[i]);
-  } */
 }
 
 const handlePlayButtonClick = async () => {
@@ -129,29 +140,42 @@ const handlePlayButtonClick = async () => {
         source.current = null;
       }
       setPlaying(false);
-      /* if (gainNode) {
-        gainNode.current.stop();
-        gainNode.current.disconnect();
-        gainNode.current = null;
-      }
-      if (analyser) {
-        analyser.current.stop();
-        analyser.current.disconnect();
-        analyser.current = null;
-      } */
     }
   } catch (error) {
     console.error('Failed to load audio:', error);
   }
 };
 
+const handlePauseButtonClick = () => {
+  try {
+    if (audioCtx.current.state === 'running') {
+      audioCtx.current.suspend();
+      setPlaying(false);
+    } else if (audioCtx.current.state === 'suspended') {
+      audioCtx.current.resume();
+      setPlaying(true);
+    }
+
+  } catch (error) {
+    console.error('Failed to pause audio:', error);
+  }
+}
+
   return (
-    <div 
-    className='control'
-    onClick={(playing === false) ? handlePlayButtonClick : handlePlayButtonClick}
-    >
-      {(playing) ? 'Stop' : 'Play'}
-    </div>
+    <>
+      <div 
+      className='control'
+      onClick={handlePlayButtonClick}
+      >
+        {(playing) ? 'Stop' : 'Play'}
+      </div>
+      <div 
+      className='control'
+      onClick={handlePauseButtonClick}
+      >
+        {(playing) ? 'Pause' : 'Resume'}
+      </div>
+    </>
   );
 }
 
