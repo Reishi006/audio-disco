@@ -16,12 +16,6 @@ const analyser = useRef(null);
 const source = useRef(null);
 const gainNode = useRef(null);
 
-/* let audioCtx = null;
-let audioBuffer = null;
-let analyser = null;
-let source = null;
-let gainNode = null; */
-
 let time = 300;
 
 const loadAudio = (url) => {
@@ -52,17 +46,9 @@ const playAudio = () => {
   source.current.buffer = audioBuffer.current;
   source.current.connect(analyser.current);
   analyser.current.connect(gainNode.current);
-  source.current.start(0, 160);
-  //source.current.stop(time);
-  /* setTimeout(() => {
-    if (source) {
-      setFadeout();
-      source.current.stop();
-      source.current.disconnect();
-      source.current = null;
-    }
-    setPlaying(false);
-  }, time*1000); */
+
+  source.current.start(0);
+
   source.current.onended = function() {
     if (source !== null) {
       setFadeout();
