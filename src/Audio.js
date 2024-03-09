@@ -52,7 +52,7 @@ const playAudio = () => {
   source.current.buffer = audioBuffer.current;
   source.current.connect(analyser.current);
   analyser.current.connect(gainNode.current);
-  source.current.start(0);
+  source.current.start(0, 160);
   //source.current.stop(time);
   /* setTimeout(() => {
     if (source) {
@@ -64,10 +64,8 @@ const playAudio = () => {
     setPlaying(false);
   }, time*1000); */
   source.current.onended = function() {
-    if (source) {
+    if (source !== null) {
       setFadeout();
-      source.current.stop();
-      source.current.disconnect();
       source.current = null;
     }
     setPlaying(false);
@@ -95,7 +93,6 @@ const analyzeAudio = () => {
   const timeout = () => {
     if (count < time*100) {
       analyser.current.getByteFrequencyData(dataArray);
-      //console.log(dataArray);
       setDataArray(dataArray);
       count++;
       setTimeout(timeout, 10);
@@ -107,18 +104,6 @@ const analyzeAudio = () => {
 
 const handlePlayButtonClick = async () => {
   try {
-    /* if (audioCtx === null && !playing) {
-      setPlaying(true);
-      audioCtx = new AudioContext();
-      await loadAudio(audioFile);
-      await resumeAudioContext();
-      playAudio();
-      setTimeout(() => {
-        analyzeAudio();
-      }, 50);
-      clickAudio();
-    } */
-
     if (audioCtx.current === null) {
       audioCtx.current = new AudioContext();
       await loadAudio(audioFile);
