@@ -178,7 +178,7 @@ function App() {
     }
   }
 
-  const elements = [1, 2, 3, 4, 5, 6];
+  const elements = ['', '', '', '', '', ''];
 
   const bubbleReposition = () => {
     const getBubblesPosition = () => {
@@ -364,7 +364,7 @@ function App() {
             ref={upAnim} 
             className='up-anim'
             style={styles.upAnim}
-          >Up</div>
+          ></div>
         </div>
 
         <div className='horizontal-anim'>
@@ -372,7 +372,7 @@ function App() {
             ref={midAnim}
             className='mid-anim'
             style={styles.midAnim}
-          >Mid</div>
+          ></div>
         </div>
 
         <div className='horizontal-anim'>
@@ -380,12 +380,14 @@ function App() {
           ref={downAnim}
           className='down-anim'
           style={styles.downAnim}
-          >Down</div>
+          ></div>
         </div>
 
-        <div className='bg-anim' ref={bgAnim} style={styles.bgAnim}>
-          Something
-        </div>
+        <div 
+          className='bg-anim' 
+          ref={bgAnim} 
+          style={styles.bgAnim}
+        ></div>
 
         <div className='bubble-anim' ref={bubbleAnim}>
           {elements.map((element, index) => (
