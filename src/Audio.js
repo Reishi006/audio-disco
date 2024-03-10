@@ -8,8 +8,6 @@ function Audio({ setDataArray, setOpacity, setFadeout }) {
 
 const [playing, setPlaying] = useState(false);
 
-window.AudioContext = window.AudioContext || window.webkitAudioContext;
-
 const audioCtx = useRef(null);
 const audioBuffer = useRef(null);
 const analyser = useRef(null);
@@ -143,9 +141,7 @@ const handlePauseButtonClick = () => {
       <div 
       className='control'
       onClick={handlePauseButtonClick}
-      >
-        {(playing) ? '⏸' : '⏯'}
-      </div>
+      >⏯</div>
     </>
   );
 }
