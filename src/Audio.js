@@ -119,12 +119,12 @@ const handlePlayButtonClick = async () => {
 
 const handlePauseButtonClick = () => {
   try {
-    if (audioCtx.current.state === 'running') {
+    if (audioCtx.current.state === 'running' && playing) {
       audioCtx.current.suspend();
-      setPlaying(false);
-    } else if (audioCtx.current.state === 'suspended') {
+      //setPlaying(false);
+    } else if (audioCtx.current.state === 'suspended' && playing) {
       audioCtx.current.resume();
-      setPlaying(true);
+      //setPlaying(true);
     }
 
   } catch (error) {
@@ -138,13 +138,13 @@ const handlePauseButtonClick = () => {
       className='control'
       onClick={handlePlayButtonClick}
       >
-        {(playing) ? 'Stop' : 'Play'}
+        {(playing) ? '⏹' : '⏵'}
       </div>
       <div 
       className='control'
       onClick={handlePauseButtonClick}
       >
-        {(playing) ? 'Pause' : 'Resume'}
+        {(playing) ? '⏸' : '⏯'}
       </div>
     </>
   );
