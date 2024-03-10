@@ -12,14 +12,14 @@ function Canvas(props) {
 
         const between = 1;
         if (props.uintarray != null) {
-            const size = Math.floor(props.width / (props.uintarray.length));
+            const size = Math.floor(props.width / (props.uintarray.length)) - between;
             if (xRef.current === 0) {
                 const offset = 
                 (
                     canvasRef.current.offsetWidth 
                     - (props.uintarray.length
                         * (size + between))
-                ) / 1;
+                ) / 2;
                 xRef.current = offset;
             }
             
