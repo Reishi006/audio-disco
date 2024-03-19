@@ -32,6 +32,7 @@ function App() {
 
   const copyrightRef = useRef(null);
 
+  const [animate, setAnimate] = useState(false);
 
   const [displayed, setDisplayed] = useState(false);
   const [display, setDisplay] = useState('none');
@@ -54,6 +55,14 @@ function App() {
   useEffect(() => {
     if (displayed === true) setDisplay('flex');
   }, [displayed]);
+
+  const handleAnimate = () => {
+    if (animate) {
+      setAnimate(false);
+    } else if (!animate) {
+      setAnimate(true);
+    }
+  }
   
   //Animations ----->
 
@@ -274,7 +283,7 @@ function App() {
     let bpm = 122;
     let index = 14;
 
-    if (UintArray.current !== null) {
+    if (UintArray.current !== null && animate) {
       
       if (UintArray.current[index] > 215 && !runningRef.current) {
         runningRef.current = true;
@@ -417,6 +426,13 @@ function App() {
           Watch: <a href='http://youtu.be/'>http://youtu.be/</a>
         </pre>
       </div>
+
+      {displayed ? 
+        <div className='checkbox'>
+          Toggle background animations <button onClick={() => handleAnimate()}>{animate ? 'Off' : 'On'}</button>
+        </div> :
+        ''
+      }
     </>
   );
 }
