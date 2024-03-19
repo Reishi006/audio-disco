@@ -288,6 +288,34 @@ $warningColor: #dd0000;
     @include whiteBlack($baseBg);
 }
 
+.checkbox {
+    position: absolute;
+    top: 90%;
+    left: 77%;
+
+    font-size: $mainSize - 12px;
+
+    @include whiteBlack($baseBg);
+
+    z-index: $invisible-div;
+
+    button {
+        padding: 1em;
+
+        cursor: pointer;
+
+        border: none;
+        border-radius: 10px;
+
+        font-size: $mainSize - 12px;
+
+        @include whiteBlack($baseBg);
+
+        box-shadow: 0px 0px 10px adjust-color($adjustedBg, $red: -50, $green: -50, $blue: -50);
+        background-color: $adjustedBg;
+    }
+}
+
 
 //===== MEDIA QUERIES =====
 
