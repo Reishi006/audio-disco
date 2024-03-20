@@ -75,7 +75,7 @@ const analyzeAudio = () => {
   let count = 0;
 
   const timeout = () => {
-    if (count < time*100) {
+    if (count < time*100 && analyser) {
       analyser.current.getByteFrequencyData(dataArray);
       setDataArray(dataArray);
       count++;
@@ -119,10 +119,8 @@ const handlePauseButtonClick = () => {
   try {
     if (audioCtx.current.state === 'running' && playing) {
       audioCtx.current.suspend();
-      //setPlaying(false);
     } else if (audioCtx.current.state === 'suspended' && playing) {
       audioCtx.current.resume();
-      //setPlaying(true);
     }
 
   } catch (error) {
