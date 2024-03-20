@@ -363,6 +363,12 @@ function App() {
               setFadeout={() => setOpacity(copyrightRef.current, 1000, 0, 'none', 'fading 1 forwards')}
             ></Audio>
         </div>
+        <div className='instructions-container'>
+          <kbd>A</kbd>&#160;<kbd>Z</kbd>&#160; - Upper animation&emsp;
+          <kbd>S</kbd>&#160;<kbd>X</kbd>&#160; - Middle animation&emsp;
+          <kbd>D</kbd>&#160;<kbd>C</kbd>&#160; - Lower animation&emsp;
+          <kbd>B</kbd>&#160; - 'Bubble' animation
+        </div>
       </div>
 
       
