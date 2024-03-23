@@ -14,6 +14,10 @@ const analyser = useRef(null);
 const source = useRef(null);
 const gainNode = useRef(null);
 
+const timeoutRef = useRef(null);
+
+let bufferLength;
+
 let time = 300;
 
 const loadAudio = (url) => {
@@ -67,7 +71,7 @@ const resumeAudioContext = async () => {
 };
 
 const analyzeAudio = () => {
-  const bufferLength = analyser.current.frequencyBinCount;
+  bufferLength = analyser.current.frequencyBinCount;
   const dataArray = new Uint8Array(bufferLength);
 
   console.log(audioCtx.current.state);
@@ -79,7 +83,7 @@ const analyzeAudio = () => {
       analyser.current.getByteFrequencyData(dataArray);
       setDataArray(dataArray);
       count++;
-      setTimeout(timeout, 10);
+      timeoutRef.current = setTimeout(timeout, 10);
     }
   }
   
@@ -108,6 +112,8 @@ const handlePlayButtonClick = async () => {
         source.current.disconnect();
         source.current = null;
       }
+      setDataArray(new Uint8Array(bufferLength));
+      clearTimeout(timeoutRef.current);
       setPlaying(false);
     }
   } catch (error) {
