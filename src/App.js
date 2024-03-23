@@ -73,7 +73,7 @@ function App() {
 
     if (timeouts.current.bgTimeout) {
       clearTimeout(timeouts.current.bgTimeout);
-      console.log(`bgTimeout cleared`);
+      //console.log(`bgTimeout cleared`);
     }
 
     let el = bgAnim.current;
@@ -108,7 +108,7 @@ function App() {
 
   useEffect(() => {
       document.addEventListener('keydown', animKey);
-      console.log(`displayed`);
+      //console.log(`displayed`);
 
       return () => {
         document.removeEventListener('keydown', animKey);
@@ -121,7 +121,7 @@ function App() {
   useEffect(() => {
     controlBorderRadius = window.getComputedStyle(controlsRef.current).borderRadius;
     cBorderRad.current = Number(controlBorderRadius.slice(0, controlBorderRadius.length - 2));
-    console.log(controlsRef.current.offsetWidth);
+    //console.log(controlsRef.current.offsetWidth);
     let inc = 2;
     const interval = setInterval (() => {
       setcolorsState((prevColors) => ({
@@ -215,10 +215,10 @@ function App() {
 
   const handleAnimation = (t, tout, elm, btnclick, bubble) => {
 
-    console.log(`timer: ${timeouts.current[tout]}`);
+    //console.log(`timer: ${timeouts.current[tout]}`);
     if (timeouts.current[tout]) {
       clearTimeout(timeouts.current[tout]);
-      console.log(`timer cleared`);
+      //console.log(`timer cleared`);
     }
 
     bubble && bubbleReposition();
@@ -237,7 +237,7 @@ function App() {
       setButtonClick({...buttonClick,
         [btnclick]: false,
       });
-      console.log(`buttonClick %c false ${t/1000}`, 'color: lightblue');
+      //console.log(`buttonClick %c false ${t/1000}`, 'color: lightblue');
     }, t/3);
 
     timeouts.current[tout] = setTimeout(() => {
@@ -245,7 +245,7 @@ function App() {
     },  t-10);
 
     animBg();
-    console.log('handleAnimation');
+    //console.log('handleAnimation');
   }
   
 
@@ -264,7 +264,7 @@ function App() {
 
 
   const setOpacity = (ref, t, op, d, animation) => {
-    console.log(`setOpacity`);
+    //console.log(`setOpacity`);
     let time = t;
     setTimeout(() => {
       ref.style.opacity = op;
