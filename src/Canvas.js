@@ -26,11 +26,11 @@ function Canvas(props) {
             for (let i = 0; i < props.uintarray.length; i++) {
 
                 ctx.fillStyle = 'rgb(50, 192, 192)';
-                ctx.filter = `hue-rotate(${props.huerotate}deg)`;
+                //ctx.filter = `hue-rotate(${props.huerotate}deg)`;
                 ctx.fillRect(xRef.current, yRef.current, size, -size);
 
                 ctx.fillStyle = 'rgb(50, 192, 192)';
-                ctx.filter = `hue-rotate(${props.huerotate}deg)`;
+                //ctx.filter = `hue-rotate(${props.huerotate}deg)`;
                 ctx.fillRect(xRef.current, yRef.current-size, size, -props.uintarray[i]);
                 xRef.current += size + between;
             }
