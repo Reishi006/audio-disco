@@ -328,8 +328,9 @@ function App() {
             width={controlsRef.current.offsetWidth - (cBorderRad.current*2)} 
             height={500} 
             display={{display}}
-            huerotate={colorsState.hueRotate}
+            huerotate={colorsState.hueRotate} /* to be removed? */
             uintarray={UintArray.current}
+            style={styles.controlContainer}
             ></Canvas> 
           : ''}
         <div className='controls-container' ref={controlsRef} style={styles.controlContainer}>
