@@ -334,35 +334,39 @@ function App() {
             ></Canvas> 
           : ''}
         <div className='controls-container' ref={controlsRef} style={styles.controlContainer}>
-            <div 
-              className='control'
-              onKeyDown={animKey} 
-              onClick={upAnimation}
-              style={buttonClick.up ? styles.activeButton : styles.notActiveButton}
-            >Up</div>
-            <div 
-              className='control' 
-              onKeyDown={animKey}  
-              onClick={midAnimation}
-              style={buttonClick.mid ? styles.activeButton : styles.notActiveButton}
-            >Mid</div>
-            <div 
-              className='control' 
-              onKeyDown={animKey}  
-              onClick={downAnimation}
-              style={buttonClick.down ? styles.activeButton : styles.notActiveButton}
-            >Down</div>
-            <div 
-              className='control' 
-              onKeyDown={animKey} 
-              onClick={bubbleAnimation}
-              style={buttonClick.bubble ? styles.activeButton : styles.notActiveButton}
-            >B</div>
-            <Audio 
-              setDataArray={setDataArray} 
-              setOpacity={() => setOpacity(copyrightRef.current, 3000, 1, 'block', 'fading-reverse 1 backwards')}
-              setFadeout={() => setOpacity(copyrightRef.current, 1000, 0, 'none', 'fading 1 forwards')}
-            ></Audio>
+            <div>
+              <div 
+                className='control'
+                onKeyDown={animKey} 
+                onClick={upAnimation}
+                style={buttonClick.up ? styles.activeButton : styles.notActiveButton}
+              >Up</div>
+              <div 
+                className='control' 
+                onKeyDown={animKey}  
+                onClick={midAnimation}
+                style={buttonClick.mid ? styles.activeButton : styles.notActiveButton}
+              >Mid</div>
+              <div 
+                className='control' 
+                onKeyDown={animKey}  
+                onClick={downAnimation}
+                style={buttonClick.down ? styles.activeButton : styles.notActiveButton}
+              >Down</div>
+            </div>
+            <div>
+              <div 
+                className='control' 
+                onKeyDown={animKey} 
+                onClick={bubbleAnimation}
+                style={buttonClick.bubble ? styles.activeButton : styles.notActiveButton}
+              >B</div>
+              <Audio 
+                setDataArray={setDataArray} 
+                setOpacity={() => setOpacity(copyrightRef.current, 3000, 1, 'block', 'fading-reverse 1 backwards')}
+                setFadeout={() => setOpacity(copyrightRef.current, 1000, 0, 'none', 'fading 1 forwards')}
+              ></Audio>
+            </div>
         </div>
         <div className='instructions-container'>
           <kbd>A</kbd>&#160;<kbd>Z</kbd>&#160; - Upper animation&emsp;
