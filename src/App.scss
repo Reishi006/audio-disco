@@ -309,7 +309,7 @@ $warningColor: #dd0000;
 .checkbox {
     position: absolute;
     top: 90%;
-    left: 77%;
+    left: 68%;
 
     font-size: $mainSize - 12px;
 
@@ -337,10 +337,33 @@ $warningColor: #dd0000;
 
 //===== MEDIA QUERIES =====
 
-@media (max-width: 1024px) {
-    .controls-container {
-        width: 33%;
+@media (max-width: 1440px) {
+    .controls-container, .instructions-container, .checkbox, .copyright {
+        font-size: $mainSize - 18px;
 
-        flex-direction: column;
+        button {
+            font-size: $mainSize - 18px;
+        }
+    }
+
+    .control {
+        width: 80px;
+        height: 35px;
+    }
+}
+
+
+@media (max-width: 1024px) {
+    .controls-container, .instructions-container, .checkbox, .copyright {
+        font-size: $mainSize - 22px;
+
+        button {
+            font-size: $mainSize - 22px;
+        }
+    }
+
+    .control {
+        width: 50px;
+        height: 25px;
     }
 }
