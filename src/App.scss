@@ -337,7 +337,7 @@ $warningColor: #dd0000;
 
 //===== MEDIA QUERIES =====
 
-@media (max-width: 1440px) {
+@media (max-width: $laptopL) {
     .controls-container, .instructions-container, .checkbox, .copyright {
         font-size: $mainSize - 18px;
 
@@ -353,7 +353,7 @@ $warningColor: #dd0000;
 }
 
 
-@media (max-width: 1024px) {
+@media (max-width: $laptop) {
     .controls-container, .instructions-container, .checkbox, .copyright {
         font-size: $mainSize - 22px;
 
@@ -365,5 +365,11 @@ $warningColor: #dd0000;
     .control {
         width: 50px;
         height: 25px;
+    }
+}
+
+@media (max-width: $tablet) {
+    .controls-container {
+        //flex-direction: column;
     }
 }
