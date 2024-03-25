@@ -101,9 +101,7 @@ const handlePlayButtonClick = async () => {
     if (!playing) {
       setPlaying(true);
       playAudio();
-      setTimeout(() => {
-        analyzeAudio();
-      }, 50);
+      analyzeAudio();
       setOpacity();
     } else {
       if (source) {
@@ -112,8 +110,16 @@ const handlePlayButtonClick = async () => {
         source.current.disconnect();
         source.current = null;
       }
+
       setDataArray(new Uint8Array(bufferLength));
       clearTimeout(timeoutRef.current);
+
+      if (audioCtx) {
+        audioCtx.current = null;
+        audioBuffer.current = null;
+        analyser.current = null;
+        gainNode.current = null;
+      }
       setPlaying(false);
     }
   } catch (error) {
