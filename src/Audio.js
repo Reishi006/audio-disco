@@ -143,12 +143,20 @@ const handlePauseButtonClick = () => {
       className='control'
       onClick={handlePlayButtonClick}
       >
-        {(playing) ? '⏹' : '⏵'}
+        <div>
+          {(playing) ? '⏹' : '⏵'}
+        </div>
       </div>
       <div 
       className='control'
       onClick={handlePauseButtonClick}
-      >⏯</div>
+      >
+        <div
+          style={
+            (playing) ? {filter: `brightness(1.0)`} : {filter: `brightness(0.4)`}
+          }
+        >⏯</div>
+      </div>
     </>
   );
 }
