@@ -197,10 +197,6 @@ $warningColor: #dd0000;
     background-color: rgba(red($baseBg) -  10, green($baseBg) -  10, blue($baseBg) -  10,  0.6);
     
     animation: breathe 5s ease-in-out infinite;
-
-    div {
-        margin: 1em;
-    }
 }
 
 @keyframes breathe {
@@ -212,6 +208,8 @@ $warningColor: #dd0000;
 .control {
     width: 130px;
     height: 70px;
+
+    margin: 1em;
 
     justify-content: center;
     align-items: center;
@@ -306,6 +304,19 @@ $warningColor: #dd0000;
     @include whiteBlack($baseBg);
 }
 
+.audio-error {
+    position: absolute;
+    top: 1em;
+    left: 50%;
+    transform: translate(-50%);
+
+    opacity: 0;
+
+    color: $warningColor;
+    
+    z-index: $invisible-div;
+}
+
 .checkbox {
     position: absolute;
     top: 90%;
@@ -338,7 +349,9 @@ $warningColor: #dd0000;
 //===== MEDIA QUERIES =====
 
 @media (max-width: $laptopL) {
-    .controls-container, .instructions-container, .checkbox, .copyright {
+    .controls-container, .instructions-container, 
+    .checkbox, .copyright, 
+    .warning-container, .warning-close {
         font-size: $mainSize - 18px;
 
         button {
@@ -350,11 +363,19 @@ $warningColor: #dd0000;
         width: 80px;
         height: 35px;
     }
+
+    .warning-container {
+        div:nth-child(2) > div:nth-child(1) {
+            font-size: $mainSize - 12px;
+        }
+    }
 }
 
 
 @media (max-width: $laptop) {
-    .controls-container, .instructions-container, .checkbox, .copyright {
+    .controls-container, .instructions-container, 
+    .checkbox, .copyright, 
+    .warning-container, .warning-close {
         font-size: $mainSize - 22px;
 
         button {
@@ -366,10 +387,16 @@ $warningColor: #dd0000;
         width: 50px;
         height: 25px;
     }
+
+    .warning-container {
+        div:nth-child(2) > div:nth-child(1) {
+            font-size: $mainSize - 18px;
+        }
+    }
 }
 
 @media (max-width: $tablet) {
-    .controls-container {
+    /* .controls-container {
         //flex-direction: column;
-    }
+    } */
 }
