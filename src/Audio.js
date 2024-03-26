@@ -128,15 +128,12 @@ const handlePlayButtonClick = async () => {
 };
 
 const handlePauseButtonClick = () => {
-  try {
+  if (audioCtx.current) {
     if (audioCtx.current.state === 'running' && playing) {
       audioCtx.current.suspend();
     } else if (audioCtx.current.state === 'suspended' && playing) {
       audioCtx.current.resume();
     }
-
-  } catch (error) {
-    console.error('Failed to pause audio:', error);
   }
 }
 
