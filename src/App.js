@@ -31,6 +31,7 @@ function App() {
 
 
   const copyrightRef = useRef(null);
+  const audioErrorRef = useRef(null);
 
   const [animate, setAnimate] = useState(false);
 
@@ -365,6 +366,8 @@ function App() {
                 setDataArray={setDataArray} 
                 setOpacity={() => setOpacity(copyrightRef.current, 3000, 1, 'block', 'fading-reverse 1 backwards')}
                 setFadeout={() => setOpacity(copyrightRef.current, 1000, 0, 'none', 'fading 1 forwards')}
+                setErrorIn={() => setOpacity(audioErrorRef.current, 1000, 1, 'block', 'fading-reverse 1 backwards')}
+                setErrorOut={() => setOpacity(audioErrorRef.current, 3000, 0, 'none', 'fading 1 forwards')}
               ></Audio>
             </div>
         </div>
@@ -424,7 +427,8 @@ function App() {
         </div>
       </div>
       
-      <div className='copyright'
+      <div 
+        className='copyright'
         ref={copyrightRef}
       >
         <pre>
@@ -436,6 +440,13 @@ function App() {
           Free Download/Stream: <a href='http://NCS.io/LuckyCharm'>http://NCS.io/LuckyCharm</a><br></br>
           Watch: <a href='http://youtu.be/'>http://youtu.be/</a>
         </pre>
+      </div>
+
+      <div 
+        className='audio-error'
+        ref={audioErrorRef}
+        >
+        Song is not currently playing
       </div>
 
       {displayed ? 
