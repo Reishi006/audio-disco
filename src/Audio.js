@@ -4,7 +4,7 @@ import './App.scss';
 
 import audioFile from './OVSKY - Lucky Charm [NCS Release].mp3';
 
-function Audio({ setDataArray, setOpacity, setFadeout, setErrorIn, setErrorOut }) {
+function Audio({ setDataArray, uIntArray, setOpacity, setFadeout, setErrorIn, setErrorOut }) {
 
 const [playing, setPlaying] = useState(false);
 
@@ -118,15 +118,38 @@ const handlePlayButtonClick = async () => {
         source.current = null;
       }
 
-      setDataArray(new Uint8Array(bufferLength));
-      clearTimeout(timeoutRef.current);
-
       if (audioCtx) {
         audioCtx.current = null;
         audioBuffer.current = null;
         analyser.current = null;
         gainNode.current = null;
       }
+
+      //setDataArray(null);
+      clearTimeout(timeoutRef.current);
+
+      let dataArray = uIntArray;
+
+      const decreaseValues = () => {
+        if (dataArray) {
+          const newArray = dataArray.map(
+            value => (value > 0) ? value - 1 : value
+          );
+          dataArray = newArray;
+          setDataArray(newArray);
+
+          if (!dataArray.every((v, arr) => v === dataArray[0])) {
+            timeoutRef.current = setTimeout(decreaseValues, 10);
+          } else {
+            console.log('timeout cleared');
+            clearTimeout(timeoutRef.current);
+          }
+          //console.log('timeout');
+        }
+      }
+
+      decreaseValues();
+
       setPlaying(false);
     }
   } catch (error) {
