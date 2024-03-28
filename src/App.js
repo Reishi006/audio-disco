@@ -363,7 +363,8 @@ function App() {
                 style={buttonClick.bubble ? styles.activeButton : styles.notActiveButton}
               >B</div>
               <Audio 
-                setDataArray={setDataArray} 
+                setDataArray={setDataArray}
+                uIntArray={UintArray.current}
                 setOpacity={() => setOpacity(copyrightRef.current, 3000, 1, 'block', 'fading-reverse 1 backwards')}
                 setFadeout={() => setOpacity(copyrightRef.current, 1000, 0, 'none', 'fading 1 forwards')}
                 setErrorIn={() => setOpacity(audioErrorRef.current, 1000, 1, 'block', 'fading-reverse 1 backwards')}
