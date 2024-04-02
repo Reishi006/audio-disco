@@ -450,7 +450,7 @@ function App() {
 
       {displayed ? 
         <div className='checkbox'>
-          Toggle background animations <button onClick={() => handleAnimate()}>{animate ? 'Off' : 'On'}</button>
+          Toggle background animations <button onClick={() => handleAnimate()}>{animate ? 'On' : 'Off'}</button>
         </div> :
         ''
       }
