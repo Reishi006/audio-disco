@@ -65,6 +65,7 @@ function App() {
     }
   }
   
+
   //Animations ----->
 
   let baseTime = 400;
@@ -74,7 +75,6 @@ function App() {
 
     if (timeouts.current.bgTimeout) {
       clearTimeout(timeouts.current.bgTimeout);
-      //console.log(`bgTimeout cleared`);
     }
 
     let el = bgAnim.current;
@@ -109,7 +109,6 @@ function App() {
 
   useEffect(() => {
       document.addEventListener('keydown', animKey);
-      //console.log(`displayed`);
 
       return () => {
         document.removeEventListener('keydown', animKey);
@@ -126,9 +125,6 @@ function App() {
     let inc = 2;
     const interval = setInterval (() => {
       setcolorsState((prevColors) => ({
-        /* red: (prevColors.red + inc) %  256,
-        green: (prevColors.green + inc) %  256,
-        blue: (prevColors.blue +  inc) %  256, */
         hueRotate: (prevColors.hueRotate + inc) % 360,
       }));
       
@@ -219,7 +215,6 @@ function App() {
     //console.log(`timer: ${timeouts.current[tout]}`);
     if (timeouts.current[tout]) {
       clearTimeout(timeouts.current[tout]);
-      //console.log(`timer cleared`);
     }
 
     bubble && bubbleReposition();
@@ -238,7 +233,6 @@ function App() {
       setButtonClick({...buttonClick,
         [btnclick]: false,
       });
-      //console.log(`buttonClick %c false ${t/1000}`, 'color: lightblue');
     }, t/3);
 
     timeouts.current[tout] = setTimeout(() => {
@@ -246,7 +240,6 @@ function App() {
     },  t-10);
 
     animBg();
-    //console.log('handleAnimation');
   }
   
 
@@ -265,7 +258,6 @@ function App() {
 
 
   const setOpacity = (ref, t, op, d, animation) => {
-    //console.log(`setOpacity`);
     let time = t;
     setTimeout(() => {
       ref.style.opacity = op;
@@ -275,7 +267,6 @@ function App() {
 
   const setDataArray = (dataArray) => {
     UintArray.current = dataArray;
-    //console.log(UintArray.current);
   }
 
   const runningRef = useRef(false);
@@ -285,6 +276,8 @@ function App() {
     let index = 14;
 
     if (UintArray.current !== null && animate) {
+
+      //----> Mapping animations to array values in some indexes
       
       if (UintArray.current[index] > 215 && !runningRef.current) {
         runningRef.current = true;
@@ -292,7 +285,6 @@ function App() {
           runningRef.current = false
         }, bpm/2);
         bubbleAnimation();
-        //console.log(UintArray.current[index]);
       }
       if ((UintArray.current[100] > 90 && UintArray.current[101] > 90) && !runningRef.current) {
         runningRef.current = true;
