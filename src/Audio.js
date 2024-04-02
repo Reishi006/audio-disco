@@ -107,6 +107,8 @@ const handlePlayButtonClick = async () => {
 
     if (!playing) {
       setPlaying(true);
+      clearTimeout(timeoutRef.current);
+      setDataArray(null);
       playAudio();
       analyzeAudio();
       setOpacity();
@@ -124,27 +126,25 @@ const handlePlayButtonClick = async () => {
         analyser.current = null;
         gainNode.current = null;
       }
-
-      //setDataArray(null);
+      
       clearTimeout(timeoutRef.current);
 
       let dataArray = uIntArray;
 
       const decreaseValues = () => {
-        if (dataArray) {
+        if (dataArray && playing) {
           const newArray = dataArray.map(
             value => (value > 0) ? value - 1 : value
           );
           dataArray = newArray;
           setDataArray(newArray);
 
-          if (!dataArray.every((v, arr) => v === dataArray[0])) {
+          if (!dataArray.every(v => v === dataArray[0])) {
             timeoutRef.current = setTimeout(decreaseValues, 10);
           } else {
             console.log('timeout cleared');
             clearTimeout(timeoutRef.current);
           }
-          //console.log('timeout');
         }
       }
 
