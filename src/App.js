@@ -93,6 +93,9 @@ function App() {
       if (e.key === ' ' || e.key === 'Enter') {
         setDisplayed(true);
       }
+
+      if (!animate) return; //don't animate when toggled
+
       if (e.key === 'a' || e.key === 'z') {
         displayed && upAnimation();
       }
@@ -108,12 +111,13 @@ function App() {
   }
 
   useEffect(() => {
+    if (!animate) return;
       document.addEventListener('keydown', animKey);
 
       return () => {
         document.removeEventListener('keydown', animKey);
       };
-  }, [displayed]);
+  }, [displayed, animate]);
 
   
   let controlBorderRadius = null;
@@ -331,19 +335,19 @@ function App() {
               <div 
                 className='control'
                 onKeyDown={animKey} 
-                onClick={upAnimation}
+                onClick={animate ? upAnimation : undefined}
                 style={buttonClick.up ? styles.activeButton : styles.notActiveButton}
               >Up</div>
               <div 
                 className='control' 
                 onKeyDown={animKey}  
-                onClick={midAnimation}
+                onClick={animate ? midAnimation : undefined}
                 style={buttonClick.mid ? styles.activeButton : styles.notActiveButton}
               >Mid</div>
               <div 
                 className='control' 
                 onKeyDown={animKey}  
-                onClick={downAnimation}
+                onClick={animate ? downAnimation : undefined}
                 style={buttonClick.down ? styles.activeButton : styles.notActiveButton}
               >Down</div>
             </div>
@@ -351,8 +355,10 @@ function App() {
               <div 
                 className='control' 
                 onKeyDown={animKey} 
-                onClick={bubbleAnimation}
-                style={buttonClick.bubble ? styles.activeButton : styles.notActiveButton}
+                onClick={animate ? bubbleAnimation : undefined}
+                style={
+                  (buttonClick.bubble) ? styles.activeButton : styles.notActiveButton
+                }
               >B</div>
               <Audio 
                 setDataArray={setDataArray}
