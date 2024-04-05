@@ -79,7 +79,6 @@ kbd {
 $warningColor: #dd0000;
 
 .warning-container {
-
     width: 50%;
     min-height: 33%;
 
@@ -87,7 +86,7 @@ $warningColor: #dd0000;
     left: 50%;
     transform: translate(-50%, -50%);
 
-    padding: .5em;
+    padding: .5em 1.5em;
     position: absolute;
     
     display: flex;
@@ -352,10 +351,10 @@ $warningColor: #dd0000;
     .controls-container, .instructions-container, 
     .checkbox, .copyright, 
     .warning-container, .warning-close {
-        font-size: $mainSize - 18px;
+        font-size: $mainSize - 10px;
 
         button {
-            font-size: $mainSize - 18px;
+            font-size: $mainSize - 10px;
         }
     }
 
@@ -366,7 +365,7 @@ $warningColor: #dd0000;
 
     .warning-container {
         div:nth-child(2) > div:nth-child(1) {
-            font-size: $mainSize - 12px;
+            font-size: $mainSize - 1px;
         }
     }
 }
@@ -376,10 +375,10 @@ $warningColor: #dd0000;
     .controls-container, .instructions-container, 
     .checkbox, .copyright, 
     .warning-container, .warning-close {
-        font-size: $mainSize - 22px;
+        font-size: $mainSize - 16px;
 
         button {
-            font-size: $mainSize - 22px;
+            font-size: $mainSize - 16px;
         }
     }
 
@@ -390,13 +389,61 @@ $warningColor: #dd0000;
 
     .warning-container {
         div:nth-child(2) > div:nth-child(1) {
-            font-size: $mainSize - 18px;
+            font-size: $mainSize - 10px;
         }
     }
 }
 
 @media (max-width: $tablet) {
-    /* .controls-container {
-        //flex-direction: column;
-    } */
+    .controls-container, .instructions-container, 
+    .checkbox, .copyright, 
+    .warning-container, .warning-close {
+        font-size: $mainSize - 19px;
+
+        button {
+            font-size: $mainSize - 19px;
+        }
+    }
+
+    .warning-container {
+        div:nth-child(2) > div:nth-child(1) {
+            font-size: $mainSize - 17px;
+        }
+    }
+}
+
+@media (max-width: $mobileL) {
+    .controls-container, .instructions-container, 
+    .checkbox, .copyright, 
+    .warning-container, .warning-close {
+        font-size: $mainSize - 22px;
+
+        button {
+            font-size: $mainSize - 22px;
+        }
+    }
+
+    .warning-container {
+        div:nth-child(2) > div:nth-child(1) {
+            font-size: $mainSize - 18px;
+        }
+    }
+}
+
+@media (max-width: $mobileM) {
+    .controls-container, .instructions-container, 
+    .checkbox, .copyright, 
+    .warning-container, .warning-close {
+        font-size: $mainSize - 24px;
+
+        button {
+            font-size: $mainSize - 24px;
+        }
+    }
+
+    .warning-container {
+        div:nth-child(2) > div:nth-child(1) {
+            font-size: $mainSize - 20px;
+        }
+    }
 }
