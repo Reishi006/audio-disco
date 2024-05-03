@@ -33,6 +33,8 @@ function App() {
   const copyrightRef = useRef(null);
   const audioErrorRef = useRef(null);
 
+  const audioPauseRef = useRef(null);
+
   const [animate, setAnimate] = useState(false);
 
   const [displayed, setDisplayed] = useState(false);
@@ -273,6 +275,10 @@ function App() {
     UintArray.current = dataArray;
   }
 
+  const setAudioPause = (pauseData) => {
+    audioPauseRef.current = pauseData;
+  }
+
   const runningRef = useRef(false);
 
   useEffect(() => {
@@ -288,21 +294,21 @@ function App() {
         setTimeout(() => {
           runningRef.current = false
         }, bpm/2);
-        bubbleAnimation();
+        !audioPauseRef.current && bubbleAnimation();
       }
       if ((UintArray.current[100] > 90 && UintArray.current[101] > 90) && !runningRef.current) {
         runningRef.current = true;
         setTimeout(() => {
           runningRef.current = false
         }, bpm/2);
-        upAnimation();
+        !audioPauseRef.current && upAnimation();
       }
       if ((UintArray.current[79] > 120 && UintArray.current[80] > 120) && !runningRef.current) {
         runningRef.current = true;
         setTimeout(() => {
           runningRef.current = false
         }, bpm/2);
-        midAnimation();
+        !audioPauseRef.current && midAnimation();
       }
       if ((UintArray.current[0] > 254 
         && UintArray.current[1] > 254) && !runningRef.current) {
@@ -310,7 +316,7 @@ function App() {
         setTimeout(() => {
           runningRef.current = false
         }, bpm);
-        downAnimation();
+        !audioPauseRef.current && downAnimation();
       }
     }
   }, [setDataArray]);
@@ -367,6 +373,7 @@ function App() {
                 setFadeout={() => setOpacity(copyrightRef.current, 1000, 0, 'none', 'fading 1 forwards')}
                 setErrorIn={() => setOpacity(audioErrorRef.current, 1000, 1, 'block', 'fading-reverse 1 backwards')}
                 setErrorOut={() => setOpacity(audioErrorRef.current, 3000, 0, 'none', 'fading 1 forwards')}
+                setAudioPause={setAudioPause}
               ></Audio>
             </div>
         </div>
